@@ -1,18 +1,13 @@
-/// @description Insert description here
-// update destination
-if (instance_exists(follow))
+/// @desc
+
+x += (xTo - x) / 25;
+y += (yTo - y) / 25;
+
+if (follow != noone)
 {
 	xTo = follow.x;
 	yTo = follow.y;
 }
 
-// update object position
-x += (xTo - x) / 10;
-y += (yTo - y) / 10;
-
-x = clamp(x, view_w_half, room_width-view_w_half);
-y = clamp(y, view_h_half, room_height-view_h_half);
-
-
-// update camera view
-camera_set_view_pos(cam, x-view_w_half, y-view_h_half);
+var vm = matrix_build_lookat(x, y, -10, x, y, 0, 0, 1, 0);
+camera_set_view_mat(camera, vm);

@@ -1,10 +1,25 @@
-/// @description Insert description here
-// initialize camera
-cam = view_camera[0];
-follow = oCursor;
-view_w_half = camera_get_view_width(cam) * 0.5;
-view_h_half = camera_get_view_height(cam) * 0.5;
-camera_x = camera_get_view_x(cam)
-camera_y = camera_get_view_y(cam)
-xTo = xstart;
-yTo = ystart;
+/// @desc Camera
+
+y = 180;
+
+if (room = menu) {
+	instance_create_layer(x,y,"Instances",oMenuCursor);
+	follow = oMenuCursor;
+}
+else {
+	instance_create_layer(x,y,"Instances",oCursor);
+	follow = oCursor;
+}
+
+camera = camera_create();
+
+var vm = matrix_build_lookat(x, y, -10, x, y, 0, 0, 1, 0);
+var pm = matrix_build_projection_ortho(480, 360, 1, 100000);
+
+camera_set_view_mat(camera,vm);
+camera_set_proj_mat(camera,pm);
+
+view_camera[0] = camera;
+
+xTo = x;
+yTo = y;
