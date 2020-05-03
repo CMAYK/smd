@@ -29,9 +29,9 @@ if (shopDescription = 0) {
 instance_create_layer(195, 90, "HUD", oHudSelectLeft);
 
 // Debug Text
-//draw_text(32, 32, "fps - " + string(fps));
+draw_text(32, 32, "fps - " + string(fps));
+draw_text(32, 64, "enemies - " + string(instance_number(oThwomp)));
 //draw_text(32, 64, "enemies - " + string(instance_number(oEnemy)));
 //draw_text(32, 80, "shells - " + string(instance_number(oShell)));
 //draw_text(32, 96, "level speed - " + string(oESpawner.spawnerSpeed));
 //draw_text(32, 112, "timervar - " + string(oESpawner.timer_var));
-draw_text(32, 112, "var - " + string(oThwomp.resetPos));

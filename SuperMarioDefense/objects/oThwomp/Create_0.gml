@@ -1,12 +1,10 @@
 vsp = 0;
-grv = 0;
-stp = 0;
-spd = 0;
-
+canMoveDown = true;
+movingUp = false;
+y_start = y;
 canDamage = true;
+
 thwompLevel = 2;
 
-resetPos = false;
-canDrop = true;
-
+image_index = 0;
 image_speed = 0;

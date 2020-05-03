@@ -6,5 +6,5 @@ else {
 }
 
 if point_in_rectangle(mouse_x, mouse_y, x+41, y+22, x-41, y-22) {
-	draw_text(x, y, "AHHHHHHH")
+	draw_text(x, y, "AHHHHHHH");
 }

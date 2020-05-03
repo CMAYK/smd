@@ -1,1 +1,1 @@
-resetPos = true;
+movingUp = true;

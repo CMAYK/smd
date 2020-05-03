@@ -39,6 +39,22 @@
             }
         },
         {
+            "Key": "0270f934-d992-4fd5-b55b-1d85bfbe955c",
+            "Value": {
+                "id": "187b9535-ca49-44ec-b727-8d2b198be855",
+                "resourcePath": "objects\\oBomb\\oBomb.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "02e43005-f883-4141-b0c9-802c9303b449",
+            "Value": {
+                "id": "7a560059-cf75-4228-815c-e46b729831db",
+                "resourcePath": "objects\\oThwomp1\\oThwomp1.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "04a4aac9-0c36-4bab-8bb6-62cedc8bfcf9",
             "Value": {
                 "id": "c9d20b4d-ab09-42be-b413-117d53d2f794",
@@ -628,6 +644,14 @@
                 "id": "294697e9-5989-4f39-8583-ac51105987ff",
                 "resourcePath": "views\\582a25ae-390e-40be-9921-ea395b9d66f3.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "583e02f2-177b-410e-b95f-3d012b21b786",
+            "Value": {
+                "id": "6b7267a8-8510-48ae-a461-d5c00d53cd62",
+                "resourcePath": "objects\\oBombCloud\\oBombCloud.yy",
+                "resourceType": "GMObject"
             }
         },
         {
