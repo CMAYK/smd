@@ -14,7 +14,8 @@
         "81122044-e43f-4fff-abf7-e841cb8340bd",
         "f14f024d-e39d-4c09-a12b-ab7723efa4e5",
         "81c5d793-6d3c-4a25-b5d3-de58ea6312c8",
-        "d750df8e-e7a2-421c-ae0f-ea41ce4cc96b"
+        "d750df8e-e7a2-421c-ae0f-ea41ce4cc96b",
+        "edb37b32-7f55-42dc-b2e1-3a58df01456c"
     ],
     "filterType": "GMSprite",
     "folderName": "HUD",

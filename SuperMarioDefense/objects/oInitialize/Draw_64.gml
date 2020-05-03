@@ -26,11 +26,9 @@ if (shopDescription = 0) {
 	draw_text(280, 25, "springboard\ncost:30\nbounces enemies\ndamaging them\nwhen they fall\nto the ground.")
 }
 
-instance_create_layer(195, 90, "HUD", oHudSelectLeft);
-
 // Debug Text
 draw_text(32, 32, "fps - " + string(fps));
-draw_text(32, 64, "enemies - " + string(instance_number(oThwomp)));
+draw_text(32, 64, "shop - " + string(shopPage));
 //draw_text(32, 64, "enemies - " + string(instance_number(oEnemy)));
 //draw_text(32, 80, "shells - " + string(instance_number(oShell)));
 //draw_text(32, 96, "level speed - " + string(oESpawner.spawnerSpeed));

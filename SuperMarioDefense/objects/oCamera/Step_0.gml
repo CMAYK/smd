@@ -12,5 +12,6 @@ if (follow != noone)
 	yTo = follow.y;
 }
 
-var vm = matrix_build_lookat(x, y, -10, x, y, 0, 0, 1, 0);
-camera_set_view_mat(camera, vm);
+x = clamp(x, view_width_half, room_width - view_width_half);
+y = clamp(y, view_height_half, room_height - view_height_half);
+camera_set_view_pos(camera, x - view_width_half, y - view_height_half);

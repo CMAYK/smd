@@ -1,5 +1,6 @@
 /// @desc
 sc_musicCreate()
+sc_createHUDObjects()
 
 shopPage = 0;
 shopDescription = 0;
