@@ -1,6 +1,9 @@
 /// @desc
 
-x += (xTo - x) / 25;
+if (oCursor.x = 1264) or (oCursor.x = 240) {
+	x += (xTo - x) / 12;	
+} else {x += (xTo - x) / 25;}
+
 y += (yTo - y) / 25;
 
 if (follow != noone)

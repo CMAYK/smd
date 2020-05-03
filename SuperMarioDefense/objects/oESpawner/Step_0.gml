@@ -1,0 +1,7 @@
+timer_var += 1
+
+if timer_var >= spawnerSpeed {
+	timer_var = 0;
+	instance_create_layer(x, y, "Enemys_Weapons", oEnemy);
+	audio_play_sound(snd_pipe, 1, 0);
+}	
