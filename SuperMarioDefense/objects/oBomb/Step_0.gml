@@ -1,2 +1,16 @@
-/// @description Insert description here
-// You can write your code in this editor
+vsp += grv;
+
+// vertical collision
+if (place_meeting(x,y+vsp,oWall))
+{
+	while (!place_meeting(x,y+sign(vsp),oWall))
+	{
+		y += sign(vsp);
+	}
+	vsp = 0;
+}
+y += vsp;
+
+move_contact_solid(90, stp);
+move_contact_solid(dir, spd);
+move_contact_solid(270, stp);
