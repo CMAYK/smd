@@ -20,6 +20,10 @@ if (movingUp) {
 }
 
 if (place_meeting(x,y+1,oWall)) && (canMoveDown) {
+	stompEffect = instance_create_layer(x+1, y+10, "Instances", oEffectStomp);
+	stompEffect.dir = 2;
+	stompEffect = instance_create_layer(x+1, y+10, "Instances", oEffectStomp);
+	stompEffect.dir = -2;
 	image_index = 2;
 	vsp = 0;	
 	canMoveDown = false;
