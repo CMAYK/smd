@@ -5,10 +5,13 @@ sc_createHUDObjects()
 shopPage = 0;
 shopDescription = 0;
 
+time = 0;
+clockHandAngle = 0;
+
 randomize();
 instance_create_layer(240, 180, "Instances", oCamera);
-global.livescounter = 10;
 
+global.livescounter = 10;
 if (global.livescounter == 10){
 	o = instance_create_layer(1302, 216, "Instances", oLife);
 	o.life = 0

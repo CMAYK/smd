@@ -10,7 +10,7 @@ spd = 1;
 level = 1;
 
 if (level = 1){
-	enemyHealth = 2;
+	enemyHealth = 1;
 }
 
 willDamage = false;

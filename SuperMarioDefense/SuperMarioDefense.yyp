@@ -1167,6 +1167,14 @@
             }
         },
         {
+            "Key": "aa88bd31-a829-4430-8fe4-2ec74d92231e",
+            "Value": {
+                "id": "7f5adc2a-6c73-4e27-a4fd-a5028efd9edc",
+                "resourcePath": "sprites\\spr_clockHand\\spr_clockHand.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "abf44caf-0f69-439f-8e58-dcd5154c4405",
             "Value": {
                 "id": "71e94264-13d3-48be-bfb5-f24c2b0e7896",

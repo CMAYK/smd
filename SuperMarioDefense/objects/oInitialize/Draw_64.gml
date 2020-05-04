@@ -7,7 +7,6 @@ draw_sprite(spr_HUDselectLeft, 0, 195, 27);
 draw_sprite(spr_HUDselectRight, 0, 440, 27);
 
 // Draw Indicators
-draw_sprite(spr_clock, 0, 24, 12);
 draw_sprite(spr_lives, 0, 110, 12);
 draw_text(130, 16, ":");
 draw_text(139, 16, string(global.livescounter));
@@ -15,6 +14,10 @@ draw_sprite(spr_level, 0, 110, 39);
 draw_text(130, 43, ":");
 draw_sprite(spr_coins, 0, 111, 66);
 draw_text(130, 70, ":");
+
+// Draw Clock
+draw_sprite(spr_clock, 0, 24, 12);
+draw_sprite_ext(spr_clockHand, 0, 56, 50, 1, 1, clockHandAngle, c_white, 1);
 
 // Draw Shop
 draw_sprite(spr_HUDShopDisplayBG, 0, 225, 24);
@@ -29,6 +32,7 @@ if (shopDescription = 0) {
 // Debug Text
 draw_text(32, 32, "fps - " + string(fps));
 draw_text(32, 64, "shop - " + string(shopPage));
+draw_text(32, 80, "shop - " + string(time));
 //draw_text(32, 64, "enemies - " + string(instance_number(oEnemy)));
 //draw_text(32, 80, "shells - " + string(instance_number(oShell)));
 //draw_text(32, 96, "level speed - " + string(oESpawner.spawnerSpeed));
