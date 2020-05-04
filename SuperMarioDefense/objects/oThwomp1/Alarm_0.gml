@@ -1,1 +1,0 @@
-resetPos = true;

@@ -1,5 +1,6 @@
 /// @description Insert description here
 sc_determineCharacter();
+sc_enemyWaves();
 sc_debug();
 
 vsp += grv;

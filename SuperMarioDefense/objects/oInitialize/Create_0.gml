@@ -5,8 +5,14 @@ sc_createHUDObjects()
 shopPage = 0;
 shopDescription = 0;
 
-time = 0;
+timer_var = 0;
+clockSeconds = 0;
 clockHandAngle = 0;
+clockHandRevolutions = 0;
+
+if (oESpawner.level = 1) {
+	waveCounter = 15;
+}
 
 randomize();
 instance_create_layer(240, 180, "Instances", oCamera);

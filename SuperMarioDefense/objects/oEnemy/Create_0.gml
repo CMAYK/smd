@@ -7,11 +7,8 @@ grv = 0.3;
 stp = 20;
 spd = 1;
 
-level = 1;
-
-if (level = 1){
-	enemyHealth = 1;
-}
+level = oESpawner.level;
+enemyHealth = 1;
 
 willDamage = false;
 willDamageId = noone;

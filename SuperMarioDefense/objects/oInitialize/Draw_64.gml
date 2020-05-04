@@ -12,6 +12,7 @@ draw_text(130, 16, ":");
 draw_text(139, 16, string(global.livescounter));
 draw_sprite(spr_level, 0, 110, 39);
 draw_text(130, 43, ":");
+draw_text(139, 43, string(waveCounter));
 draw_sprite(spr_coins, 0, 111, 66);
 draw_text(130, 70, ":");
 
@@ -30,9 +31,12 @@ if (shopDescription = 0) {
 }
 
 // Debug Text
-draw_text(32, 32, "fps - " + string(fps));
-draw_text(32, 64, "shop - " + string(shopPage));
-draw_text(32, 80, "shop - " + string(time));
+draw_text(32, 112, "fps - " + string(fps));
+draw_text(300, 112, "shop - " + string(shopPage));
+draw_text(300, 124, "timer - " + string(clockSeconds));
+draw_text(300, 136, "angle - " + string(clockHandAngle));
+draw_text(300, 148, "wave - " + string(oESpawner.wave));
+draw_text(300, 160, "clockspin - " + string(clockHandRevolutions));
 //draw_text(32, 64, "enemies - " + string(instance_number(oEnemy)));
 //draw_text(32, 80, "shells - " + string(instance_number(oShell)));
 //draw_text(32, 96, "level speed - " + string(oESpawner.spawnerSpeed));
