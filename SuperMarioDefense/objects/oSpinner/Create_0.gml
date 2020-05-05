@@ -1,8 +1,11 @@
-timer_var = 0; 
+timer_var = 0;
 
-spinnerAngle = 0;
-spinnerRevolutions = 0;
+rotation_speed = 7;
+rotation_direction = 10;
+distance_from_center = 55;
+xx = x;
+yy = y;
 
-distance = 54;//put here the distance between your points
+distance_travelled = 0;
 
 image_speed = 0;
