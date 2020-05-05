@@ -3,4 +3,5 @@ if (oInitialize.clockSeconds = 0) or (oInitialize.clockSeconds = 1) or (oInitial
 }
 else {
 	oInitialize.clockSeconds = 0;
+	audio_play_sound(snd_skipWait, 0, false);
 }

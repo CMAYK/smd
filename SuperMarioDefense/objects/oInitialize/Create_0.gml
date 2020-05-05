@@ -12,7 +12,7 @@ clockSeconds = 0;
 clockHandAngle = 0;
 clockHandRevolutions = 0;
 
-if (oESpawner.level = 1) {
+if (oEnemySpawner.level = 1) {
 	waveCounter = 15;
 }
 
