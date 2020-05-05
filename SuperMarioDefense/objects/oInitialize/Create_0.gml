@@ -5,7 +5,7 @@ sc_createHUDObjects()
 shopPage = 0;
 shopDescription = 0;
 
-enemySpawnHealth = 2;
+//enemySpawnHealth = 2;
 
 timer_var = 0;
 clockSeconds = 0;

@@ -1,0 +1,1 @@
+other.enemyHealth -= 1;

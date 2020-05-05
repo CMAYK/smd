@@ -34,9 +34,6 @@ if (shopDescription = 0) {
 draw_text(32, 112, "fps - " + string(fps));
 draw_text(300, 112, "shop - " + string(shopPage));
 draw_text(300, 124, "timer - " + string(clockSeconds));
-draw_text(300, 136, "angle - " + string(oSpinnerBar.distance_travelled));
-draw_text(300, 148, "wave - " + string(oESpawner.wave));
-//draw_text(32, 64, "enemies - " + string(instance_number(oEnemy)));
-//draw_text(32, 80, "shells - " + string(instance_number(oShell)));
-//draw_text(32, 96, "level speed - " + string(oESpawner.spawnerSpeed));
-//draw_text(32, 112, "timervar - " + string(oESpawner.timer_var));
+draw_text(300, 136, "wave - " + string(oESpawner.wave));
+draw_text(300, 148, "barmove - " + string(oSpinnerBar.distance_travelled));
+draw_text(300, 160, "rotdirec - " + string(oSpinnerBar.rotation_direction));

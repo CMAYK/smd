@@ -1,4 +1,4 @@
-distance_travelled = clamp(distance_travelled - rotation_direction - rotation_speed, -90, 90);
+distance_travelled = clamp(distance_travelled - rotation_direction, -90, 90);
 
 if (distance_travelled == -90) or (distance_travelled == 90) {
 	

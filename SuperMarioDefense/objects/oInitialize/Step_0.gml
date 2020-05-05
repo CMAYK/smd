@@ -1,3 +1,5 @@
+sc_debug()
+
 timer_var += 1
 if (timer_var = 60) {
 	timer_var = 0;

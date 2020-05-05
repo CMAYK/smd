@@ -1,7 +1,6 @@
 timer_var = 0;
 
-rotation_speed = 9;
-rotation_direction = 10;
+rotation_direction = 1;
 
 distance_travelled = 0;
 
