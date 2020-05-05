@@ -247,14 +247,6 @@
             }
         },
         {
-            "Key": "273b7f5a-b4b0-4281-ae2f-85a919ec8c9b",
-            "Value": {
-                "id": "6e0d27eb-d1fd-4e80-b65b-4668ce8e6516",
-                "resourcePath": "objects\\oSpinner\\oSpinner.yy",
-                "resourceType": "GMObject"
-            }
-        },
-        {
             "Key": "29b7fbd9-6c37-493c-85f4-a0c88da048b6",
             "Value": {
                 "id": "8ba660ab-90b0-4f7b-bc9e-f7ec1b3754e4",
@@ -756,6 +748,14 @@
                 "id": "b043ad13-f6ed-4685-9195-933e9119b6c9",
                 "resourcePath": "sprites\\spr_HUDselectLeft\\spr_HUDselectLeft.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "6312e916-3b1c-4f10-b316-cb14f451817b",
+            "Value": {
+                "id": "c3bdfea9-b88e-4eb3-a602-5002a2dab502",
+                "resourcePath": "objects\\oSpinnerBlock\\oSpinnerBlock.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -1503,6 +1503,14 @@
             }
         },
         {
+            "Key": "cc3131ab-9216-4943-b206-c8e9d7657cd3",
+            "Value": {
+                "id": "8421f790-04ad-428e-96b0-a3d690cd27d4",
+                "resourcePath": "views\\cc3131ab-9216-4943-b206-c8e9d7657cd3.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "cc98d028-7bdd-4680-85f3-c87a7baa481e",
             "Value": {
                 "id": "b5b5d16f-699b-49a0-bc13-8eac8603d98a",
@@ -1572,6 +1580,14 @@
                 "id": "0cd7e96a-7df1-4a57-b17b-375d0a6bb655",
                 "resourcePath": "views\\d3fab41f-c8fe-4d93-9808-3d6430244d81.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "d5516f8c-24be-43ae-a65d-1d6dc4aa9340",
+            "Value": {
+                "id": "955e80e5-eec3-4c10-b9de-1b74a86a0933",
+                "resourcePath": "objects\\oSpinnerSpikeBall\\oSpinnerSpikeBall.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -1652,6 +1668,14 @@
                 "id": "36532c7c-df97-43ac-bb26-02e58cc1f098",
                 "resourcePath": "sprites\\spr_fmcarry\\spr_fmcarry.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "e0c1c5d4-e69c-4a88-923d-ff59baf9e028",
+            "Value": {
+                "id": "5c8d9fd3-ddb9-4628-8a94-6abac72beb8d",
+                "resourcePath": "objects\\oSpinnerBar\\oSpinnerBar.yy",
+                "resourceType": "GMObject"
             }
         },
         {

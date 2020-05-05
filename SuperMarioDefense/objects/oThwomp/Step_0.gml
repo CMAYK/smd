@@ -3,7 +3,7 @@ if (instance_exists(oEnemy)) {
 	if point_in_rectangle(nearEnemy.x, nearEnemy.y, x-48, y, x+16, y+480) && (canMoveDown) {
 		image_index = 1;
 	}	
-	if (point_in_rectangle(nearEnemy.x, nearEnemy.y, x-16, y, x+16, y+480)) {
+	if (point_in_rectangle(nearEnemy.x, nearEnemy.y, x-6, y, x+6, y+480)) {
 		image_index = 1;
 		if (canMoveDown) { 
 			image_index = 2;
@@ -16,7 +16,7 @@ if (instance_exists(oEnemy)) {
 }
 
 if (movingUp) { 
-	vsp = -1;
+	vsp = -1.5;
 }
 
 if (place_meeting(x,y+1,oWall)) && (canMoveDown) {

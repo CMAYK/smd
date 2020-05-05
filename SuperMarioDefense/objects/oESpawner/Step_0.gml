@@ -4,6 +4,7 @@ if (!wave = 0) {
 	if (instance_number(oEnemy) = 5) {
 		spawnerSpeed = 90000000000;
 	}
+
 	if timer_var >= spawnerSpeed {
 		timer_var = 0;
 		o = instance_create_layer(x, y, "Enemys_Weapons", oEnemy);
