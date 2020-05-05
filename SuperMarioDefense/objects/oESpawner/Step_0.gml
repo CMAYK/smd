@@ -6,7 +6,8 @@ if (!wave = 0) {
 	}
 	if timer_var >= spawnerSpeed {
 		timer_var = 0;
-		instance_create_layer(x, y, "Enemys_Weapons", oEnemy);
+		o = instance_create_layer(x, y, "Enemys_Weapons", oEnemy);
+		o.enemyHealth = oInitialize.enemySpawnHealth;
 		audio_play_sound(snd_pipe, 1, 0);
 	}	
 }

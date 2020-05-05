@@ -10,6 +10,8 @@ spd = 1;
 level = oESpawner.level;
 enemyHealth = 1;
 
+enemyHit = false;
+
 willDamage = false;
 willDamageId = noone;
 

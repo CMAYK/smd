@@ -40,5 +40,6 @@ if (y < y_start) && (movingUp) {
 }
 
 if (y = y_start) && !(canDamage) {
-	canDamage = true;	
+	canDamage = true;
+	countdown = false;
 }

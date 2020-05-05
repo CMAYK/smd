@@ -32,6 +32,11 @@ if(pos > total_length)
 	audio_sound_set_track_position(global.bgm, pos - loop_length);
 }
 
+// DEBUG
+if keyboard_check_pressed(vk_f4) {
+	window_set_size(window_get_width() * 2, window_get_height() * 2)
+}
+
 // parallax background
 var layer_1 = layer_get_id("Backgrounds_1");
 var layer_2 = layer_get_id("Backgrounds_2");
