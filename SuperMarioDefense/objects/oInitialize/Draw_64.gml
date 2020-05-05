@@ -36,7 +36,7 @@ draw_text(300, 112, "shop - " + string(shopPage));
 draw_text(300, 124, "timer - " + string(clockSeconds));
 draw_text(300, 136, "angle - " + string(clockHandAngle));
 draw_text(300, 148, "wave - " + string(oESpawner.wave));
-draw_text(300, 160, "clockspin - " + string(clockHandRevolutions));
+draw_text(300, 160, "clockspin - " + string(oSpinner.distance_travelled));
 //draw_text(32, 64, "enemies - " + string(instance_number(oEnemy)));
 //draw_text(32, 80, "shells - " + string(instance_number(oShell)));
 //draw_text(32, 96, "level speed - " + string(oESpawner.spawnerSpeed));
