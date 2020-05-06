@@ -17,6 +17,7 @@ if (place_meeting(x,y+vsp,oWall))
 y = y + vsp;
 
 if (enemyHealth <= 0) {
+	global.coins += worth;
 	instance_destroy();
 	instance_create_layer(x+5, y+8, "Instances", characterDefeated);
 	audio_play_sound(snd_coin, 10, false);

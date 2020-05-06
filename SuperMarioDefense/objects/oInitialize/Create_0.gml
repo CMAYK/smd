@@ -5,6 +5,8 @@ sc_createHUDObjects()
 shopPage = 0;
 shopDescription = 0;
 
+global.coins = 0;
+
 //enemySpawnHealth = 2;
 
 timer_var = 0;
@@ -13,7 +15,7 @@ clockHandAngle = 0;
 clockHandRevolutions = 0;
 
 if (oEnemySpawner.level = 1) {
-	waveCounter = 15;
+	global.waves = 15;
 }
 
 randomize();

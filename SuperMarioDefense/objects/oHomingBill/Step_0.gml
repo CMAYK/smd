@@ -1,9 +1,9 @@
-speed = 1;
+speed = min(billSpeed + 0.5, 10);
 
 if (instance_exists(oEnemy)) {
-	if (point_in_circle(oEnemy.x, oEnemy.y, x, y, billRadius)) {
-		billSpeed = point_direction(x, y, oEnemy.x, oEnemy.y);
-		direction += sign(dsin(billSpeed - direction)) * 20;
+	nearEnemy = instance_nearest(x, y, oEnemy);
+	if (point_in_circle(nearEnemy.x, nearEnemy.y, x, y, billRadius)) {
+		direction = point_direction(x, y, nearEnemy.x, nearEnemy.y);
 		image_angle = direction;
 	}
 }

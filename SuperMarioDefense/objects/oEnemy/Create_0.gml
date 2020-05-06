@@ -7,6 +7,8 @@ grv = 0.3;
 stp = 20;
 spd = 1;
 
+worth = 1;
+
 level = oEnemySpawner.level;
 enemyHealth = 1;
 

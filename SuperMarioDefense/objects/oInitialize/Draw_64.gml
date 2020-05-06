@@ -12,9 +12,10 @@ draw_text(130, 16, ":");
 draw_text(139, 16, string(global.livescounter));
 draw_sprite(spr_level, 0, 110, 39);
 draw_text(130, 43, ":");
-draw_text(139, 43, string(waveCounter));
+draw_text(139, 43, string(global.waves));
 draw_sprite(spr_coins, 0, 111, 66);
 draw_text(130, 70, ":");
+draw_text(139, 70, string(global.coins));
 
 // Draw Clock
 draw_sprite(spr_clock, 0, 24, 12);

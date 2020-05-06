@@ -1,4 +1,5 @@
-billSpeed = 1;
+hsp = 1;
+billSpeed = -1;
 billDamage = 1;
-billRadius = 200;
+billRadius = 400;
 billLevel = 1;
