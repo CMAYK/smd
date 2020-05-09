@@ -6,7 +6,9 @@
     "children": [
         "f783accc-a7d7-41f6-8879-6f44073ea707",
         "e74164d5-a97d-44c8-9765-b9062078f7b2",
-        "9603a1f2-efa5-4e2b-943f-9f2a99313134"
+        "9603a1f2-efa5-4e2b-943f-9f2a99313134",
+        "e6224049-78ea-47ab-abdf-91933c8f66f3",
+        "5585e185-1c8d-44c6-be3e-1dfa68b6d5c4"
     ],
     "filterType": "GMObject",
     "folderName": "Game Objects",
