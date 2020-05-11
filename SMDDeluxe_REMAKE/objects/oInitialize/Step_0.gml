@@ -48,27 +48,68 @@ layer_x(layer_base, lerp(0,camera_get_view_x(view_camera[0]), 0));
 
 // RotVar test
 
-if (rotVarActive = true) {
-	rotVar += 0.5;	
-	if (rotVar >= 15) {
-		rotVar += 0.3;
-		if (rotVar >= 19) {
-			rotVar += 0.1;
-			if (rotVar >= 19.5) {
-				rotVarActive = false;	
+rotation_direction += r_speed;
+if rotVarActive == 1 {
+    switch (rotation_direction) {
+        case 1:
+            if r_speed <= 12 {
+                r_speed += acceleration;
+            }
+            else if r_speed >=14 {
+                r_speed = 14;
+            }
+            case -1:
+                if r_speed >= -12 {
+                    r_speed -= acceleration;
+                }
+                else if r_speed <=-14 {
+                    r_speed = -14;
+                }
+    }
+}
+else {
+    exit;
+}
+
+// Object Selection
+if (instance_exists(oSpringboard)) {
+	if (oSpringboard.selected = 1) {
+			weaponHUDLocation -= 15;
+			if (weaponHUDLocation <= 0) {
+				weaponHUDLocation = 0;
+			}
+	}
+	if (oSpringboard.selected = 0) {
+			weaponHUDLocation += 15;
+			if (weaponHUDLocation >= 180) {
+				weaponHUDLocation = 180;
 			}	
-		}	
 	}
 }
-if (rotVarActive = false) {
-	rotVar -= 1;	
-	if (rotVar <= -15) {
-		rotVar -= 0.3;
-		if (rotVar <= -19) {
-			rotVar -= 0.1;
-			if (rotVar <= -19.5) {
-				rotVarActive = true;	
-			}	
-		}	
+if (instance_exists(oShellLauncher)) {
+	if (oShellLauncher.selected = 1) {
+			weaponHUDLocation -= 15;
+			if (weaponHUDLocation <= 0) {
+				weaponHUDLocation = 0;
+			}
+	}
+	if (oShellLauncher.selected = 0) {
+			weaponHUDLocation += 15;
+			if (weaponHUDLocation >= 180) {
+				weaponHUDLocation = 180;
+			}
 	}
 }
+if (objectSelected = 1) {
+	weaponHUDLocation -= 15;
+		if (weaponHUDLocation <= 0) {
+			weaponHUDLocation = 0;
+		}
+}
+if (objectSelected = 0) {
+	weaponHUDLocation += 15;
+		if (weaponHUDLocation >= 180) {
+			weaponHUDLocation = 180;
+		}
+}
+//show_debug_message(weaponHUDLocation);

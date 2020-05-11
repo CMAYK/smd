@@ -4,7 +4,7 @@
     "mvc": "1.1",
     "name": "9c4b584a-87cf-43a0-bb03-b2340e216b84",
     "children": [
-        
+        "cf54677d-6ab4-4eb1-bec4-720f660a80af"
     ],
     "filterType": "GMSprite",
     "folderName": "Ninji",
