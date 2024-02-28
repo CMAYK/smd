@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bca8une2b3one"]
+
+[ext_resource type="Texture2D" uid="uid://b3d5pgnxr53v1" path="res://Sprites/ogStageRecreation.png" id="1_lcbyt"]
+
+[node name="TestStage" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lcbyt")
