@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://dki1o55dnt3no"]
+
+[ext_resource type="Texture2D" uid="uid://b5vliotylwwec" path="res://Sprites/smallmario.png" id="1_20dg1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juf38"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(96, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80ibv"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(113, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mit2h"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(63, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltfju"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(46, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6evn"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(80, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gfns"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(0, 0, 15, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1b6wr"]
+atlas = ExtResource("1_20dg1")
+region = Rect2(15, 0, 15, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e4maq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juf38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80ibv")
+}],
+"loop": true,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mit2h")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltfju")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6evn")
+}],
+"loop": true,
+"name": &"ride",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gfns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1b6wr")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxhxk"]
+radius = 6.0
+height = 20.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_e4maq")
+animation = &"walk"
+frame_progress = 0.492602
+offset = Vector2(0, -12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+visible = false
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_sxhxk")
