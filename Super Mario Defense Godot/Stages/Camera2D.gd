@@ -10,7 +10,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_released("scroll_up"):
-		FOLLOW_POINT += 100
+		FOLLOW_POINT -= 50
 	if Input.is_action_just_released("scroll_down"):
-		FOLLOW_POINT -= 100
-	self.position.x = lerp(self.position.x, FOLLOW_POINT, 0.05)
+		FOLLOW_POINT += 50
+
+	self.position.x = lerp(self.position.x, FOLLOW_POINT, 0.02)

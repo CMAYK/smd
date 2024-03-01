@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dki1o55dnt3no"]
+[gd_scene load_steps=12 format=3 uid="uid://dki1o55dnt3no"]
 
 [ext_resource type="Texture2D" uid="uid://b5vliotylwwec" path="res://Sprites/smallmario.png" id="1_20dg1"]
+[ext_resource type="Script" path="res://Objects/Character.gd" id="1_22mfd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juf38"]
 atlas = ExtResource("1_20dg1")
@@ -76,16 +77,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 6.0
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxhxk"]
 radius = 6.0
-height = 20.0
+height = 18.0
 
 [node name="Node2D" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_22mfd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_e4maq")
