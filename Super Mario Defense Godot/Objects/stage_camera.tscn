@@ -7,6 +7,10 @@
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, 1)
 zoom = Vector2(4, 4)
+limit_left = -1000
+limit_top = -1000
+limit_right = 1000
+limit_bottom = 1000
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("1_0fno1")
