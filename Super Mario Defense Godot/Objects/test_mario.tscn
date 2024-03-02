@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://dki1o55dnt3no"]
 
 [ext_resource type="Texture2D" uid="uid://b5vliotylwwec" path="res://Sprites/smallmario.png" id="1_20dg1"]
-[ext_resource type="Script" path="res://Objects/Character.gd" id="1_22mfd"]
+[ext_resource type="Script" path="res://Objects/Mario.gd" id="1_ocofa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juf38"]
 atlas = ExtResource("1_20dg1")
@@ -84,15 +84,16 @@ animations = [{
 radius = 6.0
 height = 18.0
 
-[node name="Node2D" type="Node2D"]
+[node name="one of the many" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("1_22mfd")
+floor_snap_length = 0.0
+script = ExtResource("1_ocofa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_e4maq")
 animation = &"walk"
-frame_progress = 0.492602
+frame_progress = 0.966102
 offset = Vector2(0, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
