@@ -20,4 +20,8 @@ func _physics_process(delta):
 	$AnimatedSprite2D.animation = "walk"
 	velocity.x = SPEED
 
+	if is_on_floor():
+		var normal: Vector2 = get_floor_normal()
+		$AnimatedSprite2D.rotation = normal.angle() + PI / 2
+	
 	move_and_slide()

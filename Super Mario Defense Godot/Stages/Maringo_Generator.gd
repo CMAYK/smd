@@ -12,5 +12,6 @@ func _process(delta):
 		create_mario()
 
 func create_mario():
-	var mario = mario.instantiate()
-	get_parent().add_child(mario)
+	pass
+	#var mario = mario.instantiate()
+	#get_parent().add_child(mario)
