@@ -9,13 +9,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _physics_process(delta):
-	if is_on_floor():
-		pass
-		#var normal: Vector2 = get_floor_normal()
-		#$AnimatedSprite2D.rotation = normal.angle() + PI / 2
-	else:
-		velocity.y += gravity * delta
-
 	$AnimatedSprite2D.play()
 	$AnimatedSprite2D.animation = "walk"
 	
@@ -23,6 +16,8 @@ func _physics_process(delta):
 
 	if is_on_floor():
 		var normal: Vector2 = get_floor_normal()
-		$AnimatedSprite2D.rotation = lerp($AnimatedSprite2D.rotation, normal.angle()+ PI / 2, 0.3)
-
+		$AnimatedSprite2D.rotation = lerp($AnimatedSprite2D.rotation, normal.angle()+ PI / 2, 0.2)
+	else:
+		velocity.y += gravity * delta
+	
 	move_and_slide()

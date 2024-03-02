@@ -1,6 +1,6 @@
 extends Node2D
 
-var mario_path = preload("res://Objects/test_mario.tscn")
+var mario_path = preload("res://Objects/walker.tscn")
 var spawn_time = 200
 var spawn_timer = spawn_time
 

@@ -1,34 +1,34 @@
 [gd_scene load_steps=12 format=3 uid="uid://dki1o55dnt3no"]
 
-[ext_resource type="Texture2D" uid="uid://b5vliotylwwec" path="res://Sprites/smallmario.png" id="1_20dg1"]
-[ext_resource type="Script" path="res://Objects/Mario.gd" id="1_ocofa"]
+[ext_resource type="Script" path="res://Objects/walker.gd" id="1_sep84"]
+[ext_resource type="Texture2D" uid="uid://b5vliotylwwec" path="res://Sprites/smallmario.png" id="2_arhyk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juf38"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(96, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_80ibv"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(113, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mit2h"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(63, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ltfju"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(46, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c6evn"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(80, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6gfns"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(0, 0, 15, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1b6wr"]
-atlas = ExtResource("1_20dg1")
+atlas = ExtResource("2_arhyk")
 region = Rect2(15, 0, 15, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e4maq"]
@@ -84,17 +84,17 @@ animations = [{
 radius = 6.0
 height = 18.0
 
-[node name="one of the many" type="Node2D"]
+[node name="walker" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 collision_layer = 2
-floor_snap_length = 0.0
-script = ExtResource("1_ocofa")
+floor_max_angle = 1.5708
+floor_snap_length = 7.5
+script = ExtResource("1_sep84")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_e4maq")
-animation = &"walk"
-frame_progress = 0.966102
+animation = &"fall"
 offset = Vector2(0, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
