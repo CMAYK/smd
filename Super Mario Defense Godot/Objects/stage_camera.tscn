@@ -2,7 +2,11 @@
 
 [ext_resource type="Script" path="res://Stages/Camera2D.gd" id="1_0fno1"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Stage_Camera" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, 1)
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 script = ExtResource("1_0fno1")

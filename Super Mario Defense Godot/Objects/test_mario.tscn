@@ -87,6 +87,7 @@ height = 18.0
 [node name="one of the many" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 2
 floor_snap_length = 0.0
 script = ExtResource("1_ocofa")
 
@@ -97,6 +98,5 @@ frame_progress = 0.966102
 offset = Vector2(0, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-visible = false
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_sxhxk")
