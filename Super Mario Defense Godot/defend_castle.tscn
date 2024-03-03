@@ -1,17 +1,17 @@
 [gd_scene load_steps=7 format=3 uid="uid://dhi8te6ykdxug"]
 
-[ext_resource type="Texture2D" uid="uid://b7qgnb6b3hndw" path="res://misc/sprites/castle.png" id="1_b14yx"]
-[ext_resource type="Texture2D" uid="uid://xm4nh4lenk4u" path="res://misc/sprites/castledoor.png" id="2_u6dny"]
+[ext_resource type="Texture2D" uid="uid://b7qgnb6b3hndw" path="res://misc/sprites/castle.png" id="1_wwtvw"]
+[ext_resource type="Texture2D" uid="uid://xm4nh4lenk4u" path="res://misc/sprites/castledoor.png" id="2_mxd0k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tl8un"]
 size = Vector2(12, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a7ip7"]
-atlas = ExtResource("2_u6dny")
+atlas = ExtResource("2_mxd0k")
 region = Rect2(48, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bpoap"]
-atlas = ExtResource("2_u6dny")
+atlas = ExtResource("2_mxd0k")
 region = Rect2(0, 0, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e45jo"]
@@ -36,7 +36,7 @@ animations = [{
 [node name="defend_castle" type="Area2D"]
 
 [node name="Castle" type="Sprite2D" parent="."]
-texture = ExtResource("1_b14yx")
+texture = ExtResource("1_wwtvw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 0)
