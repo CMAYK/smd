@@ -9,6 +9,7 @@ script = ExtResource("1_extvo")
 [node name="layout" type="Node2D" parent="."]
 
 [node name="camera_main" type="Camera2D" parent="."]
+position = Vector2(320, -190)
 limit_left = 0
 limit_bottom = 0
 limit_smoothed = true
