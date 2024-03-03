@@ -88,8 +88,9 @@ height = 18.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 collision_layer = 2
+floor_stop_on_slope = false
 floor_max_angle = 1.55334
-floor_snap_length = 7.5
+floor_snap_length = 6.0
 script = ExtResource("1_i4g1n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]

@@ -1,6 +1,6 @@
 extends Node2D
 
-var layout_name:String = "layout_test"
+var layout_name:String = "stage_1"
 var layout
 var tilemap
 

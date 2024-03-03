@@ -16,7 +16,7 @@ func _physics_process(delta):
 
 	if is_on_floor():
 		var normal: Vector2 = get_floor_normal()
-		self.rotation = lerp(self.rotation, normal.angle()+ PI / 2, 0.2)
+		self.rotation = lerp(self.rotation, normal.angle()+ PI / 2, 0.1)
 	else:
 		velocity.y += gravity * delta
 	

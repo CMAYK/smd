@@ -10,8 +10,8 @@
 [node name="bg_yoshis_island_one" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-offset = Vector2(0, -248)
-transform = Transform2D(1, 0, 0, 1, 0, -248)
+offset = Vector2(0, -216)
+transform = Transform2D(1, 0, 0, 1, 0, -216)
 
 [node name="ParallaxLayer_6" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(1024, 0)
