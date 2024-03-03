@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0coceqg04byv"]
+
+[ext_resource type="Texture2D" uid="uid://brudvrfrkpmhu" path="res://misc/sprites/mario_spin.png" id="1_xkpsm"]
+[ext_resource type="Script" path="res://heroes/Mario_spin/MarioSpin.gd" id="2_7x5fn"]
+
+[sub_resource type="Animation" id="Animation_8ysu2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xaaoy"]
+resource_name = "spin"
+length = 2.0
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wq6rd"]
+_data = {
+"RESET": SubResource("Animation_8ysu2"),
+"spin": SubResource("Animation_xaaoy")
+}
+
+[node name="Node2D" type="Node2D"]
+
+[node name="MarioSpin" type="Sprite2D" parent="."]
+texture = ExtResource("1_xkpsm")
+script = ExtResource("2_7x5fn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarioSpin"]
+libraries = {
+"": SubResource("AnimationLibrary_wq6rd")
+}
