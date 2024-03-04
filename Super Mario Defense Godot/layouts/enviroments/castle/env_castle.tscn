@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://3lvh07inl3it"]
+
+[ext_resource type="Texture2D" uid="uid://cnx1rx1snd0o2" path="res://layouts/enviroments/castle/layer2.png" id="1_1s08q"]
+[ext_resource type="Texture2D" uid="uid://sykuodhlb0rp" path="res://layouts/enviroments/castle/layer1.png" id="2_lphfg"]
+
+[node name="env_castle" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(0, -216)
+transform = Transform2D(1, 0, 0, 1, 0, -216)
+
+[node name="ParallaxLayer_2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 1)
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Layer2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_2"]
+position = Vector2(512, 0)
+texture = ExtResource("1_1s08q")
+
+[node name="ParallaxLayer_1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 1)
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Layer1" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer_1"]
+position = Vector2(512, 0)
+texture = ExtResource("2_lphfg")

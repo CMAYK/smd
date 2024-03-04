@@ -1,13 +1,13 @@
 [gd_scene load_steps=7 format=3 uid="uid://q52ph4usski1"]
 
-[ext_resource type="Texture2D" uid="uid://hc5bc2g760w3" path="res://layouts/enviroments/yoshis_island_1/sprites/layer_6.png" id="1_uesyv"]
-[ext_resource type="Texture2D" uid="uid://b6ahexcsudtuv" path="res://layouts/enviroments/yoshis_island_1/sprites/layer_5.png" id="2_oej7j"]
-[ext_resource type="Texture2D" uid="uid://c2vj3ctn6b2o8" path="res://layouts/enviroments/yoshis_island_1/sprites/layer_4.png" id="3_gmcdr"]
-[ext_resource type="Texture2D" uid="uid://bbnp2lt37kim4" path="res://layouts/enviroments/yoshis_island_1/sprites/layer_3.png" id="4_lhkyu"]
-[ext_resource type="Texture2D" uid="uid://tiakinelvemo" path="res://layouts/enviroments/yoshis_island_1/sprites/layer_2.png" id="5_tqnpq"]
-[ext_resource type="Texture2D" uid="uid://3cd8tbp4nrts" path="res://layouts/enviroments/yoshis_island_1/sprites/layer_1.png" id="6_l7brw"]
+[ext_resource type="Texture2D" uid="uid://hc5bc2g760w3" path="res://layouts/enviroments/yoshis_island_1/layer_6.png" id="1_uesyv"]
+[ext_resource type="Texture2D" uid="uid://b6ahexcsudtuv" path="res://layouts/enviroments/yoshis_island_1/layer_5.png" id="2_oej7j"]
+[ext_resource type="Texture2D" uid="uid://c2vj3ctn6b2o8" path="res://layouts/enviroments/yoshis_island_1/layer_4.png" id="3_gmcdr"]
+[ext_resource type="Texture2D" uid="uid://bbnp2lt37kim4" path="res://layouts/enviroments/yoshis_island_1/layer_3.png" id="4_lhkyu"]
+[ext_resource type="Texture2D" uid="uid://tiakinelvemo" path="res://layouts/enviroments/yoshis_island_1/layer_2.png" id="5_tqnpq"]
+[ext_resource type="Texture2D" uid="uid://3cd8tbp4nrts" path="res://layouts/enviroments/yoshis_island_1/layer_1.png" id="6_l7brw"]
 
-[node name="bg_yoshis_island_one" type="Node2D"]
+[node name="env_yoshis_island_one" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 offset = Vector2(0, -216)

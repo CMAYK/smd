@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hc5bc2g760w3"
-path="res://.godot/imported/layer_6.png-6effd21c8a5029eb48a975abf89d7587.ctex"
+uid="uid://kod5o2q2jy2r"
+path="res://.godot/imported/layer2-4.png-e3a42c6a2eaa6821335079ca92b2dc58.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://layouts/enviroments/yoshis_island_1/sprites/layer_6.png"
-dest_files=["res://.godot/imported/layer_6.png-6effd21c8a5029eb48a975abf89d7587.ctex"]
+source_file="res://layouts/enviroments/star_world/layer2-4.png"
+dest_files=["res://.godot/imported/layer2-4.png-e3a42c6a2eaa6821335079ca92b2dc58.ctex"]
 
 [params]
 

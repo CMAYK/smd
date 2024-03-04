@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bca8une2b3one"]
 
 [ext_resource type="Script" path="res://heroes/hero_spawner.gd" id="1_arpj8"]
-[ext_resource type="PackedScene" uid="uid://q52ph4usski1" path="res://layouts/enviroments/yoshis_island_1/bg_yoshis_island_1.tscn" id="1_npxwu"]
+[ext_resource type="PackedScene" uid="uid://q52ph4usski1" path="res://layouts/enviroments/yoshis_island_1/env_yoshis_island_1.tscn" id="1_npxwu"]
 [ext_resource type="Texture2D" uid="uid://dno33qj3jnfhw" path="res://layouts/tileset.png" id="1_pr6gh"]
 [ext_resource type="PackedScene" uid="uid://dki1o55dnt3no" path="res://heroes/mario_small.tscn" id="3_xvncg"]
 
