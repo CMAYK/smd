@@ -17,13 +17,13 @@ func _physics_process(delta):
 	#this changes the game window size; test1, 2 and 3 correspond to placeholder inputs mapped in project settings
 	if Input.is_action_pressed("test1"):
 		print("base res")
-		DisplayServer.window_set_size(Vector2(640, 380)) # 1x base res
+		DisplayServer.window_set_size(Vector2(400, 224)) # 1x base res
 	if Input.is_action_pressed("test2"):
 		print("720p")
-		DisplayServer.window_set_size(Vector2(640*2, 380*2)) # 720p
+		DisplayServer.window_set_size(Vector2(400*3.2, 224*3.21428571)) # 720p
 	if Input.is_action_pressed("test3"):
 		print("1080p")
-		DisplayServer.window_set_size(Vector2(640*3, 380*3)) # 1080p
+		DisplayServer.window_set_size(Vector2(400*4.8, 224*4.8215)) # 1080p
 	
 	#this changes scrolling input method
 	if Input.is_action_just_released("test4"):

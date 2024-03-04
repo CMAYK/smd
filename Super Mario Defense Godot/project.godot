@@ -21,10 +21,9 @@ globals="*res://scripts/globals.gd"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=380
+window/size/viewport_width=400
+window/size/viewport_height=224
 window/stretch/mode="canvas_items"
-window/stretch/scale_mode="integer"
 mouse_cursor/custom_image="res://misc/sprites/cursor.png"
 
 [input]
