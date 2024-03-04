@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://6plej4v35iwp"]
+
+[ext_resource type="Script" path="res://towers/ballnchain/tower_ballnchain.gd" id="1_hbgrv"]
+[ext_resource type="Texture2D" uid="uid://ckgsp7j6wtbuq" path="res://towers/ballnchain/spr_block.png" id="2_au2cx"]
+[ext_resource type="Texture2D" uid="uid://dver41t8e48rp" path="res://towers/ballnchain/spr_chain.png" id="3_ts785"]
+[ext_resource type="Texture2D" uid="uid://bvi3plkxp4bi1" path="res://towers/ballnchain/spr_ball.png" id="4_mag7j"]
+
+[node name="tower_ballnchain" type="Node2D"]
+script = ExtResource("1_hbgrv")
+
+[node name="Base" type="Area2D" parent="."]
+
+[node name="spr_base" type="Sprite2D" parent="Base"]
+texture = ExtResource("2_au2cx")
+
+[node name="Chain1" type="Area2D" parent="."]
+
+[node name="spr_chain" type="Sprite2D" parent="Chain1"]
+texture = ExtResource("3_ts785")
+
+[node name="Chain2" type="Area2D" parent="."]
+
+[node name="spr_chain" type="Sprite2D" parent="Chain2"]
+texture = ExtResource("3_ts785")
+
+[node name="Ball" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+
+[node name="spr_ball" type="Sprite2D" parent="Ball"]
+texture = ExtResource("4_mag7j")

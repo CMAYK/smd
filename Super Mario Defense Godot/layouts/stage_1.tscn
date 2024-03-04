@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cr0gogwqunopr"]
+[gd_scene load_steps=12 format=3 uid="uid://cr0gogwqunopr"]
 
 [ext_resource type="Script" path="res://heroes/hero_spawner.gd" id="1_31bo7"]
 [ext_resource type="Texture2D" uid="uid://dno33qj3jnfhw" path="res://layouts/tileset.png" id="2_1y8en"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://layouts/Sight_test.gd" id="4_gftek"]
 [ext_resource type="Texture2D" uid="uid://h1tpqvlblg8h" path="res://misc/sprites/redbox.png" id="5_fbk1c"]
 [ext_resource type="Script" path="res://layouts/idk.gd" id="6_ce2et"]
+[ext_resource type="PackedScene" uid="uid://6plej4v35iwp" path="res://towers/ballnchain/ballnchain.tscn" id="7_3gfb3"]
 
 [sub_resource type="GDScript" id="GDScript_7ujyi"]
 script/source = "extends Node2D
@@ -559,6 +560,9 @@ texture = ExtResource("5_fbk1c")
 
 [node name="Node2D" type="Node2D" parent="Sight"]
 script = ExtResource("6_ce2et")
+
+[node name="tower_ballnchain" parent="." instance=ExtResource("7_3gfb3")]
+position = Vector2(472, -153)
 
 [connection signal="body_entered" from="Sight" to="Sight" method="_on_body_entered"]
 [connection signal="body_exited" from="Sight" to="Sight" method="_on_body_exited"]
