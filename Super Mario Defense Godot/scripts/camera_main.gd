@@ -54,8 +54,13 @@ func _limit_camera(tilemap:TileMap):
 func _update_window_res(size_x,size_y):
 	DisplayServer.window_set_size(Vector2(size_x, size_y))
 	print(str(size_y) + "p")
+	center_window()
 
-	var window_size = Vector2(size_x,size_y)
-	var screen_size = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen())
-	var centered = Vector2(screen_size.x/2 - window_size.x/2, screen_size.y/2 - window_size.y/2)
-	DisplayServer.window_set_position(centered)
+
+func center_window() -> void:
+
+	var window = get_window()
+	var screen = window.current_screen
+	var screen_rect = DisplayServer.screen_get_usable_rect(screen)
+	var window_size = window.get_size_with_decorations()
+	window.position = screen_rect.position + (screen_rect.size / 2 - window_size / 2)
