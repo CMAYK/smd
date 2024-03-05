@@ -2,7 +2,7 @@ extends Node2D
 
 var mario_path = preload("res://game/heroes/mario_small.tscn")
 var fast_path = preload("res://game/heroes/mario_fast.tscn")
-var spawn_time = 200
+var spawn_time = 100
 var spawn_timer = spawn_time
 
 var count = 0
@@ -10,7 +10,7 @@ var count = 0
 func _ready():
 	create_mario()
 
-func _process(delta):
+func _physics_process(delta):
 	spawn_timer -= 1
 	if spawn_timer <= 0:
 		spawn_timer = spawn_time

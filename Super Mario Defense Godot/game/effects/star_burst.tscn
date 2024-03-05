@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://7tgqw8yc1hth"]
+
+[ext_resource type="Script" path="res://game/effects/star_burst.gd" id="1_8y8i1"]
+[ext_resource type="Texture2D" uid="uid://37wx8858ihc7" path="res://game/effects/star_burst.png" id="2_8c2rm"]
+
+[sub_resource type="Animation" id="Animation_f5f34"]
+resource_name = "bang!"
+length = 0.250005
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_qt7co"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cyc7k"]
+_data = {
+"RESET": SubResource("Animation_qt7co"),
+"bang!": SubResource("Animation_f5f34")
+}
+
+[node name="StarBurst" type="Node2D"]
+script = ExtResource("1_8y8i1")
+
+[node name="StarBurst" type="Sprite2D" parent="."]
+position = Vector2(0, -0.5)
+texture = ExtResource("2_8c2rm")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StarBurst"]
+libraries = {
+"": SubResource("AnimationLibrary_cyc7k")
+}
+
+[connection signal="animation_finished" from="StarBurst/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
