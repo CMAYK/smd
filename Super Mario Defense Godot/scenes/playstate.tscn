@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dohi6t4mjk24j"]
+
+[ext_resource type="Script" path="res://scenes/playstate.gd" id="1_extvo"]
+[ext_resource type="Script" path="res://game/scripts/camera_main.gd" id="2_gvj3b"]
+
+[node name="playstate" type="Node2D"]
+script = ExtResource("1_extvo")
+
+[node name="layout" type="Node2D" parent="."]
+
+[node name="camera_main" type="Camera2D" parent="."]
+position = Vector2(200, -113)
+limit_left = 0
+limit_bottom = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("2_gvj3b")

@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7qi2gho4civb"]
+
+[ext_resource type="Texture2D" uid="uid://cy0yo24xcxmlf" path="res://game/enviroments/ghost_house/layer_1-1.png" id="1_bn0gj"]
+[ext_resource type="Texture2D" uid="uid://ds0vlq4g353wi" path="res://game/enviroments/ghost_house/layer_1-2.png" id="2_ukgrt"]
+[ext_resource type="Texture2D" uid="uid://dp6mrmijj2mjc" path="res://game/enviroments/ghost_house/layer_1-3.png" id="3_s1dmc"]
+[ext_resource type="Texture2D" uid="uid://co7ppamtienxn" path="res://game/enviroments/ghost_house/layer_1-4.png" id="4_rxg0x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x3elf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bn0gj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ukgrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_s1dmc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rxg0x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="env_ghost_house" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(0, -216)
+transform = Transform2D(1, 0, 0, 1, 0, -216)
+
+[node name="ParallaxLayer_1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 1)
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Layer1" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer_1"]
+position = Vector2(512, 0)
+sprite_frames = SubResource("SpriteFrames_x3elf")
+autoplay = "default"
+frame_progress = 0.176625

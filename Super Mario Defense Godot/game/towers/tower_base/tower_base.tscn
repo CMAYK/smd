@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://21lq37kqd6vj"]
+
+[ext_resource type="Script" path="res://game/towers/tower_base/tower_base.gd" id="1_b81pj"]
+[ext_resource type="Texture2D" uid="uid://h1tpqvlblg8h" path="res://game/towers/tower_base/redbox.png" id="2_ketih"]
+[ext_resource type="Texture2D" uid="uid://c5hosufvsf12t" path="res://misc/sprites/canon.png" id="2_lk5vf"]
+[ext_resource type="Texture2D" uid="uid://cafpgheoynv6t" path="res://misc/sprites/blaster.png" id="3_hw72d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y2v2m"]
+radius = 129.004
+
+[node name="TowerBase" type="Node2D"]
+script = ExtResource("1_b81pj")
+
+[node name="barrel_sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -39)
+texture = ExtResource("2_lk5vf")
+offset = Vector2(0, -1)
+flip_h = true
+flip_v = true
+
+[node name="launcher_sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("3_hw72d")
+
+[node name="fire_rate" type="Timer" parent="."]
+autostart = true
+
+[node name="spawn_pos" type="Marker2D" parent="."]
+position = Vector2(0, -41)
+
+[node name="Sight" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sight"]
+position = Vector2(0, -41)
+shape = SubResource("CircleShape2D_y2v2m")
+
+[node name="Redbox" type="Sprite2D" parent="Sight"]
+visible = false
+modulate = Color(1, 1, 1, 0.5)
+rotation = 0.785398
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ketih")
+
+[connection signal="timeout" from="fire_rate" to="." method="_on_fire_rate_timeout"]
+[connection signal="body_entered" from="Sight" to="." method="_on_sight_body_entered"]
+[connection signal="body_exited" from="Sight" to="." method="_on_sight_body_exited"]
