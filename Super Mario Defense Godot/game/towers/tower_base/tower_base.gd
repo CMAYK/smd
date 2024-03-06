@@ -7,7 +7,7 @@ var bullet = preload("res://game/towers/Bullet.tscn")
 @onready var head = $barrel_sprite
 
 func _ready():
-	pass
+	head.rotation = PI
 
 func _process(delta):
 	if hero_bodies.is_empty() == false:

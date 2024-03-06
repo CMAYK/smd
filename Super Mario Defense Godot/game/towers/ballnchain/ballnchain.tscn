@@ -9,26 +9,28 @@
 radius = 14.5
 height = 29.0
 
-[node name="tower_ballnchain" type="Node2D"]
+[node name="BallnChain" type="Area2D"]
+collision_layer = 16
+collision_mask = 18
 script = ExtResource("1_hbgrv")
 
 [node name="base" type="Sprite2D" parent="."]
 texture = ExtResource("2_au2cx")
 
-[node name="ballnchain" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ballnchain"]
-position = Vector2(0, 48.5)
-shape = SubResource("CapsuleShape2D_2sd16")
-
-[node name="spr_chain" type="Sprite2D" parent="ballnchain"]
+[node name="spr_chain" type="Sprite2D" parent="."]
 position = Vector2(0, 16)
 texture = ExtResource("3_ts785")
 
-[node name="spr_chain2" type="Sprite2D" parent="ballnchain"]
+[node name="spr_chain2" type="Sprite2D" parent="."]
 position = Vector2(0, 32)
 texture = ExtResource("3_ts785")
 
-[node name="spr_ball" type="Sprite2D" parent="ballnchain"]
+[node name="spr_ball" type="Sprite2D" parent="."]
 position = Vector2(0, 48)
 texture = ExtResource("4_mag7j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 48.5)
+shape = SubResource("CapsuleShape2D_2sd16")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
