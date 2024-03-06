@@ -27,6 +27,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 mouse_cursor/custom_image="res://misc/sprites/cursor.png"
 
+[gui]
+
+theme/custom_font="res://misc/sprites/font1.png"
+
 [input]
 
 scrollw_up={

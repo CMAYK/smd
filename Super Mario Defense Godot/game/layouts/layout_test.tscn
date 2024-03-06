@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bca8une2b3one"]
+[gd_scene load_steps=13 format=3 uid="uid://bca8une2b3one"]
 
 [ext_resource type="Script" path="res://game/heroes/hero_spawner.gd" id="1_arpj8"]
 [ext_resource type="PackedScene" uid="uid://q52ph4usski1" path="res://game/enviroments/yoshis_island_1/env_yoshis_island_1.tscn" id="1_npxwu"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://21lq37kqd6vj" path="res://game/towers/tower_base/tower_base.tscn" id="5_l0c5p"]
 [ext_resource type="PackedScene" uid="uid://6plej4v35iwp" path="res://game/towers/ballnchain/ballnchain.tscn" id="6_2yrnr"]
 [ext_resource type="PackedScene" uid="uid://d1ya3dbuaroir" path="res://game/enviroments/star_world/env_star_world.tscn" id="7_bo5o4"]
+[ext_resource type="FontFile" uid="uid://dr7yswansssl6" path="res://misc/sprites/font1.png" id="8_dd3f1"]
 
 [sub_resource type="GDScript" id="GDScript_7ujyi"]
 script/source = "extends Node2D
@@ -267,6 +268,10 @@ texture = ExtResource("1_pr6gh")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_6spg6")
 
+[sub_resource type="Theme" id="Theme_giuo8"]
+default_font = ExtResource("8_dd3f1")
+default_font_size = 8
+
 [node name="layout_test" type="Node2D" node_paths=PackedStringArray("tilemap")]
 script = SubResource("GDScript_7ujyi")
 tilemap = NodePath("ground_tiles")
@@ -292,7 +297,14 @@ position = Vector2(103, -160)
 position = Vector2(574, -64)
 
 [node name="tower_ballnchain" parent="." instance=ExtResource("6_2yrnr")]
-position = Vector2(796, -151)
+position = Vector2(671, -126)
 
 [node name="env_star_world" parent="." instance=ExtResource("7_bo5o4")]
-position = Vector2(684, -23)
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_right = 176.0
+offset_bottom = 23.0
+theme = SubResource("Theme_giuo8")
+theme_override_fonts/font = ExtResource("8_dd3f1")
+text = "1234567890"

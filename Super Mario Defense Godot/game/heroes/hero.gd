@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 var speed = 75.0
-var health = 5
+var health = 25
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -10,7 +10,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _physics_process(delta):
+
 	$health.text = str(health)
+	$health.rotation = -self.rotation
 	$AnimatedSprite2D.play()
 	$AnimatedSprite2D.animation = "walk"
 	

@@ -161,11 +161,12 @@ shape = SubResource("CapsuleShape2D_bub76")
 debug_color = Color(0.639216, 0.52549, 0.0509804, 0.419608)
 
 [node name="health" type="Label" parent="CharacterBody2D"]
-offset_left = -9.0
-offset_top = -24.0
-offset_right = 31.0
-offset_bottom = -1.0
-scale = Vector2(0.371713, 0.371713)
-text = "2"
+offset_left = 2.0
+offset_top = -39.0
+offset_right = 34.0
+offset_bottom = -23.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(0, 16)
+text = "00"
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
