@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://byik212i1nt7q"]
+
+[ext_resource type="Texture2D" uid="uid://cfwup8vgf0rcl" path="res://game/enviroments/underground/layer1-1.png" id="1_6cku3"]
+[ext_resource type="Texture2D" uid="uid://4gbmrnfv4bpg" path="res://game/enviroments/underground/layer1-2.png" id="2_lvp6i"]
+[ext_resource type="Texture2D" uid="uid://lg55u02ekcao" path="res://game/enviroments/underground/layer1-3.png" id="3_axqpc"]
+[ext_resource type="Texture2D" uid="uid://ccm013bx1pvm1" path="res://game/enviroments/underground/layer1-4.png" id="4_s5w1o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ja8wv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6cku3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lvp6i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_axqpc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_s5w1o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="env_underground" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(0, -216)
+transform = Transform2D(1, 0, 0, 1, 0, -216)
+
+[node name="ParallaxLayer_1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 1)
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Layer1" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer_1"]
+position = Vector2(512, 0)
+sprite_frames = SubResource("SpriteFrames_ja8wv")
