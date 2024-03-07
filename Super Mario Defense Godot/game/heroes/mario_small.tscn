@@ -1,172 +1,99 @@
-[gd_scene load_steps=16 format=3 uid="uid://dki1o55dnt3no"]
+[gd_scene load_steps=9 format=3 uid="uid://dki1o55dnt3no"]
 
 [ext_resource type="Script" path="res://game/heroes/hero.gd" id="1_68may"]
-[ext_resource type="Texture2D" uid="uid://b5vliotylwwec" path="res://misc/sprites/smallmario.png" id="2_1jtl7"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_juf38"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(96, 0, 16, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_80ibv"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(113, 0, 16, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mit2h"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(63, 0, 16, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ltfju"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(46, 0, 16, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c6evn"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(80, 0, 16, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6gfns"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(0, 0, 15, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1b6wr"]
-atlas = ExtResource("2_1jtl7")
-region = Rect2(15, 0, 15, 24)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_e4maq"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_juf38")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_80ibv")
-}],
-"loop": true,
-"name": &"death",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mit2h")
-}],
-"loop": true,
-"name": &"fall",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ltfju")
-}],
-"loop": true,
-"name": &"jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c6evn")
-}],
-"loop": true,
-"name": &"ride",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6gfns")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1b6wr")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 7.0
-}]
-
-[sub_resource type="Animation" id="Animation_cusbd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_lahu4"]
-resource_name = "hurt"
-length = 0.350005
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.35),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_357qd"]
-_data = {
-"RESET": SubResource("Animation_cusbd"),
-"hurt": SubResource("Animation_lahu4")
-}
+[ext_resource type="Texture2D" uid="uid://fi7ybmruflws" path="res://game/heroes/small_mario.png" id="2_3mj72"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxhxk"]
 radius = 6.0
 height = 20.0
 
+[sub_resource type="Animation" id="Animation_188v5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_33db5"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_b3bgc"]
+resource_name = "walk"
+length = 0.266673
+loop_mode = 1
+step = 0.0666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4veg3"]
+_data = {
+"RESET": SubResource("Animation_188v5"),
+"idle": SubResource("Animation_33db5"),
+"walk": SubResource("Animation_b3bgc")
+}
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bub76"]
 radius = 6.0
 height = 20.0
 
-[node name="mario_small" type="Node2D"]
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="mario_small" type="CharacterBody2D" node_paths=PackedStringArray("target_pos")]
 collision_layer = 2
-floor_stop_on_slope = false
-floor_max_angle = 1.55334
-floor_snap_length = 6.0
+floor_snap_length = 0.0
 script = ExtResource("1_68may")
+target_pos = NodePath("target_pos")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-sprite_frames = SubResource("SpriteFrames_e4maq")
-animation = &"walk"
-offset = Vector2(0, -12)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D/AnimatedSprite2D"]
-libraries = {
-"": SubResource("AnimationLibrary_357qd")
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-visible = false
+[node name="hero_collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_sxhxk")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
-visible = false
-collision_layer = 20
-collision_mask = 40
+[node name="sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("2_3mj72")
+hframes = 9
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_4veg3")
+}
+
+[node name="hero_hurtbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 16
+
+[node name="hurtbox_shape" type="CollisionShape2D" parent="hero_hurtbox"]
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_bub76")
 debug_color = Color(0.639216, 0.52549, 0.0509804, 0.419608)
 
-[node name="health" type="Label" parent="CharacterBody2D"]
-offset_left = 2.0
-offset_top = -39.0
-offset_right = 34.0
-offset_bottom = -23.0
+[node name="target_pos" type="Marker2D" parent="."]
+position = Vector2(0, -13)
+
+[node name="health" type="Label" parent="."]
+offset_left = 4.0
+offset_top = -37.0
+offset_right = 36.0
+offset_bottom = -21.0
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(0, 16)
 text = "00"
 
-[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="hero_hurtbox" to="." method="_on_hero_hurtbox_area_entered"]

@@ -2,6 +2,8 @@ extends Area2D
 
 var speed = 85
 var damage = 5
+var knockback = 50
+var pierce = 100
 
 func _process(delta: float) -> void:
 	self.rotation_degrees += speed * delta
@@ -12,7 +14,6 @@ func _kill():
 
 func _on_area_entered(area):
 	var areaparent = area.get_parent()
-	if areaparent.ballhit == false:
-		areaparent.speed -= speed *2
-		areaparent.health -= damage
-		areaparent.ballhit = true
+	areaparent.speed -= knockback*3
+	areaparent.velocity.y -= knockback*2
+	areaparent.health -= damage

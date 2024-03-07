@@ -82,9 +82,10 @@ test5={
 [layer_names]
 
 2d_physics/layer_1="ground"
-2d_physics/layer_2="heros"
-2d_physics/layer_3="towers"
-2d_physics/layer_4="projectiles"
+2d_physics/layer_2="hero_collision"
+2d_physics/layer_3="hero_hurtbox"
+2d_physics/layer_5="tower_hitbox"
+2d_physics/layer_6="tower_vision"
 
 [rendering]
 

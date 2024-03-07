@@ -6,14 +6,22 @@ var tilemap
 
 @onready var camera = $camera_main
 
+var sound_player = preload("res://game/sounds/sound_player.tscn")
+var hero_spawner = preload("res://game/heroes/hero_spawner/hero_spawner.tscn")
 
 func _ready():
-	load_layout()
+	_load_layout()
+	_load_spawner()
 	camera._limit_camera(tilemap)
 
-func load_layout():
+func _load_layout():
 	var layout_path = load("res://game/layouts/%s.tscn" % [layout_name])
 	var layout_instance = layout_path.instantiate()
 	$layout.add_child(layout_instance)
 	layout = $layout.get_child(0)
 	tilemap = layout.tilemap
+
+func _load_spawner():
+	var hs_instance = hero_spawner.instantiate()
+	hs_instance.position = layout.spawn_pos.position
+	$heros.add_child(hs_instance)

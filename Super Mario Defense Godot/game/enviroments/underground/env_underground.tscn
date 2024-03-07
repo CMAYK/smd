@@ -38,3 +38,5 @@ motion_mirroring = Vector2(1024, 0)
 [node name="Layer1" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer_1"]
 position = Vector2(512, 0)
 sprite_frames = SubResource("SpriteFrames_ja8wv")
+autoplay = "default"
+frame_progress = 0.796727

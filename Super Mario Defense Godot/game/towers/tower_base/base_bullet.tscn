@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://7uuaurvuxlwi"]
+
+[ext_resource type="Script" path="res://game/towers/tower_base/base_bullet.gd" id="1_wl50v"]
+[ext_resource type="Texture2D" uid="uid://h1tpqvlblg8h" path="res://game/towers/tower_base/sprites/redbox.png" id="2_xfly8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yuaom"]
+radius = 3.0
+height = 14.0
+
+[node name="Bullet" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_wl50v")
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_yuaom")
+
+[node name="sprite" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(-2.98023e-08, 5.96046e-07)
+scale = Vector2(0.875, 0.375)
+texture = ExtResource("2_xfly8")
+flip_h = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

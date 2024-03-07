@@ -1,41 +1,72 @@
 extends Node2D
 
-var hero_bodies = []
+@export var projectile : PackedScene
+@export var spawn_pos : Marker2D
+
+@export var damage : int
+@export var pierce : int
+@export var reload : float
+@export var radius : float
+@export var knockback : float
+@export var projectile_speed : float
+
+@onready var playstate = get_parent().get_parent()
+@onready var sound_player = playstate.sound_player
+
+var hero_list = []
+var reloaded : bool = false
+var timer = 0
 var current_hero
-var bullet = preload("res://game/towers/Bullet.tscn")
-@onready var spawn_pos = $spawn_pos
-@onready var head = $barrel_sprite
+var target_pos : Vector2
 
 func _ready():
-	head.rotation = PI
+	$sight/radius.shape.set_radius(radius)
 
-func _process(delta):
-	if hero_bodies.is_empty() == false:
-		hero_bodies.sort_custom(first)
-		current_hero =  hero_bodies[0]
-		$Sight/Redbox.global_position = Vector2(current_hero.global_position.x, current_hero.global_position.y - 30)
+func _physics_process(delta):
 
+	if reloaded == false:
+		timer += 1
+	if timer >= reload:
+		reloaded = true
+		timer = 0.0
+
+	if !hero_list.is_empty():
+		current_hero = _get_first(hero_list)
+		target_pos = current_hero.get_parent().target_pos.global_position
+		if reloaded:
+			_shoot()
+			reloaded = false
+
+func _shoot():
+	var p = projectile.instantiate()
+	p.global_position = spawn_pos.global_position
+	p.direction = target_pos
+	p.speed = projectile_speed
+	p.damage = damage
+	p.knockback = knockback
+	p.pierce = pierce
+	get_parent().add_child(p)
+
+	var sp = sound_player.instantiate()
+	sp.sfx = load("res://game/sounds/smw_thud.wav")
+	sp.volume = 0
+	sp.from = 0.13
+	sp.position = self.position
+	playstate.add_child(sp)
+
+func _get_first(array:Array):
+	if array.is_empty() == false:
+		array.sort_custom(first)
+		return array[0]
 
 func first(a, b):
 	if a.global_position > b.global_position:
 		return true
 	return false
 
-func _on_sight_body_entered(body):
-	if body:
-		hero_bodies.append(body)
-func _on_sight_body_exited(body):
-	if body:
-		hero_bodies.erase(body)
-
-func _on_fire_rate_timeout():
-	if current_hero:
-		if hero_bodies:
-			if current_hero == hero_bodies[0]:
-				$barrel_sprite/AnimationPlayer.play("RESET")
-				$barrel_sprite/AnimationPlayer.play("fire")
-				head.look_at(current_hero.global_position)
-				var bullet_instance = bullet.instantiate()
-				bullet_instance.global_position = spawn_pos.global_position
-				bullet_instance.target = current_hero
-				get_parent().add_child(bullet_instance)
+func _on_sight_area_entered(area):
+	if area:
+		hero_list.append(area)
+func _on_sight_area_exited(area):
+	if area:
+		hero_list.erase(area)
