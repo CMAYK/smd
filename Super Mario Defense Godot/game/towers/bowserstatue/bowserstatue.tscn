@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cergusca085ev"]
+
+[ext_resource type="Script" path="res://game/towers/bowserstatue/bowserstatue.gd" id="1_m0fc3"]
+[ext_resource type="PackedScene" uid="uid://bop5n5aywovnk" path="res://game/towers/bowserstatue/bowserstatue_bullet.tscn" id="2_uevh4"]
+[ext_resource type="Texture2D" uid="uid://dvw8m1yy6d1d7" path="res://game/towers/bowserstatue/bowserstatue.png" id="3_v5xkb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1jhwj"]
+radius = 116.004
+
+[node name="Bowser Statue" type="Node2D" node_paths=PackedStringArray("spawn_pos")]
+script = ExtResource("1_m0fc3")
+projectile = ExtResource("2_uevh4")
+spawn_pos = NodePath("shoot_pos")
+damage = 1
+pierce = 1
+reload = 5.0
+radius = 50.0
+projectile_speed = 60.0
+
+[node name="sprite" type="Sprite2D" parent="."]
+position = Vector2(-4, -20)
+texture = ExtResource("3_v5xkb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprite"]
+
+[node name="sight" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 4
+
+[node name="radius" type="CollisionShape2D" parent="sight"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_1jhwj")
+
+[node name="shoot_pos" type="Marker2D" parent="."]
+position = Vector2(-16, -26)
+
+[connection signal="area_entered" from="sight" to="." method="_on_sight_area_entered"]
+[connection signal="area_exited" from="sight" to="." method="_on_sight_area_exited"]

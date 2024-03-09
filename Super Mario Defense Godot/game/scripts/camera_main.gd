@@ -32,7 +32,7 @@ func _physics_process(delta):
 
 	#this changes the game window size; test1, 2 and 3 correspond to placeholder inputs mapped in project settings
 	if Input.is_action_just_pressed("test1"):
-		_update_window_res(400, 226)
+		_update_window_res(400, 224)
 	if Input.is_action_just_pressed("test2"):
 		_update_window_res(1280, 720)
 	if Input.is_action_just_pressed("test3"):

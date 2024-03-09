@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cergusca085ev"]
+[gd_scene load_steps=5 format=3 uid="uid://cg4ahcg7jht38"]
 
 [ext_resource type="Script" path="res://game/towers/tower_base/tower_base.gd" id="1_m0fc3"]
 [ext_resource type="PackedScene" uid="uid://7uuaurvuxlwi" path="res://game/towers/tower_base/base_bullet.tscn" id="2_550cd"]
