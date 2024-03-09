@@ -13,9 +13,9 @@ projectile = ExtResource("2_uevh4")
 spawn_pos = NodePath("shoot_pos")
 damage = 1
 pierce = 1
-reload = 5.0
+reload = 125.0
 radius = 50.0
-projectile_speed = 60.0
+projectile_speed = 300.0
 
 [node name="sprite" type="Sprite2D" parent="."]
 position = Vector2(-4, -20)
@@ -32,7 +32,7 @@ position = Vector2(0, -16)
 shape = SubResource("CircleShape2D_1jhwj")
 
 [node name="shoot_pos" type="Marker2D" parent="."]
-position = Vector2(-16, -26)
+position = Vector2(-9, -32)
 
 [connection signal="area_entered" from="sight" to="." method="_on_sight_area_entered"]
 [connection signal="area_exited" from="sight" to="." method="_on_sight_area_exited"]

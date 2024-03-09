@@ -54,10 +54,11 @@ _data = {
 radius = 6.0
 height = 20.0
 
-[node name="mario_small" type="CharacterBody2D"]
+[node name="mario_small" type="CharacterBody2D" node_paths=PackedStringArray("target_pos")]
 collision_layer = 2
 floor_snap_length = 0.0
 script = ExtResource("1_68may")
+target_pos = NodePath("target_pos")
 
 [node name="hero_collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)

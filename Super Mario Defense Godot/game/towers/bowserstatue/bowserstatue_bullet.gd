@@ -10,16 +10,19 @@ var knockback
 var pierce
 var dopierce
 
+var colormod 
+var color
+
 @onready var playstate = get_parent().get_parent()
 @onready var sound_player = playstate.sound_player
 
 func _ready():
+	print(get_parent().colormod)
 	#0 pierce means infinate pierce
 	if pierce <= 0:
 		dopierce = false
 	else:
 		dopierce = true
-
 
 	#if direction != null:
 		#$sprite.look_at(direction)
@@ -32,6 +35,8 @@ func _ready():
 			#$sprite.flip_v = true
 
 func _physics_process(delta):
+	#if get_parent().colormod != null:
+		#$sprite.modulate = color[get_parent().colormod]
 
 	#move = move.move_toward(look_vector, delta)
 	#move = move.normalized() * speed
