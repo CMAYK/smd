@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var gravity = 1000
+var gravity = 800
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	velocity.x = -100
@@ -10,8 +10,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	$sprite/AnimationPlayer.play("default")
-	
 	velocity.y += gravity * delta
-	if position.y >= 64:
-		queue_free()
 	move_and_slide()
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()
