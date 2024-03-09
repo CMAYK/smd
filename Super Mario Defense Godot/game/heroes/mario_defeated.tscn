@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqf4y58eoehhx"]
+
+[ext_resource type="Texture2D" uid="uid://fi7ybmruflws" path="res://game/heroes/small_mario.png" id="1_4gc57"]
+[ext_resource type="Script" path="res://game/heroes/hero_defeated.gd" id="1_cyy6m"]
+
+[sub_resource type="Animation" id="Animation_usesl"]
+resource_name = "default"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gjxsr"]
+_data = {
+"default": SubResource("Animation_usesl")
+}
+
+[node name="mario_defeated" type="CharacterBody2D"]
+position = Vector2(8, -12)
+script = ExtResource("1_cyy6m")
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_4gc57")
+offset = Vector2(0, -6)
+region_enabled = true
+region_rect = Rect2(91, 0, 16, 24)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_gjxsr")
+}

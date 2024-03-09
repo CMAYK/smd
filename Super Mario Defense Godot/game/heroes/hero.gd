@@ -39,6 +39,9 @@ func _kill():
 	var fx = load("res://game/effects/cloud.tscn").instantiate()
 	get_parent().add_child(fx)
 	fx.position = self.position
+	fx = load("res://game/heroes/mario_defeated.tscn").instantiate()
+	get_parent().add_child(fx)
+	fx.position = self.position
 
 	var sp = sound_player.instantiate()
 	sp.sfx = load("res://game/sounds/smw_yoshi_stomp.wav")

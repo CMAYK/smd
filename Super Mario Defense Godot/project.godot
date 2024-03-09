@@ -22,7 +22,7 @@ globals="*res://game/scripts/globals.gd"
 [display]
 
 window/size/viewport_width=400
-window/size/viewport_height=226
+window/size/viewport_height=224
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 mouse_cursor/custom_image="res://misc/sprites/cursor.png"

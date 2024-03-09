@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bca8une2b3one"]
+[gd_scene load_steps=9 format=3 uid="uid://bca8une2b3one"]
 
 [ext_resource type="Texture2D" uid="uid://dno33qj3jnfhw" path="res://game/layouts/tilesets/ground_tilesets.png" id="1_pr6gh"]
-[ext_resource type="PackedScene" uid="uid://cu7a21cpv2w6r" path="res://game/enviroments/fortress/env_fortress.tscn" id="4_3o8pv"]
-[ext_resource type="PackedScene" uid="uid://3lvh07inl3it" path="res://game/enviroments/castle/env_castle.tscn" id="5_oa006"]
+[ext_resource type="PackedScene" uid="uid://cpq0gv7xcbq2n" path="res://game/enviroments/yoshis_island_2/env_yoshis_island_2.tscn" id="4_25w41"]
 [ext_resource type="PackedScene" uid="uid://6plej4v35iwp" path="res://game/towers/ballnchain/ballnchain.tscn" id="6_2yrnr"]
 [ext_resource type="FontFile" uid="uid://dr7yswansssl6" path="res://misc/sprites/font1.png" id="8_dd3f1"]
 
@@ -289,8 +288,5 @@ theme = SubResource("Theme_giuo8")
 theme_override_fonts/font = ExtResource("8_dd3f1")
 text = "1234567890"
 
-[node name="env_fortress" parent="." instance=ExtResource("4_3o8pv")]
-position = Vector2(51, 139)
-
-[node name="env_castle" parent="." instance=ExtResource("5_oa006")]
-position = Vector2(94, 53)
+[node name="env_yoshis_island_two" parent="." instance=ExtResource("4_25w41")]
+metadata/_edit_lock_ = true
