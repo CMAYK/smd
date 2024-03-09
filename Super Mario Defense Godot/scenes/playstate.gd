@@ -7,7 +7,7 @@ var tilemap
 @onready var camera = $camera_main
 
 var sound_player = preload("res://game/sounds/sound_player.tscn")
-var hero_spawner = preload("res://game/heroes/hero_spawner/hero_spawner.tscn")
+var hero_spawner = preload("res://game/heroes/spico_statemachine/mario_state.tscn")
 
 func _ready():
 	_load_layout()

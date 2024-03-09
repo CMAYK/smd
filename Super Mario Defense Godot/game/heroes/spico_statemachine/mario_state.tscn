@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://dkbwunpbi0wse"]
+
+[ext_resource type="Texture2D" uid="uid://fi7ybmruflws" path="res://game/heroes/small_mario.png" id="2_5wm4f"]
+[ext_resource type="Script" path="res://game/heroes/spico_statemachine/classes/state_machine.gd" id="2_jn5wo"]
+[ext_resource type="Script" path="res://game/heroes/spico_statemachine/states/walk.gd" id="3_l4c87"]
+[ext_resource type="Script" path="res://game/heroes/spico_statemachine/states/air.gd" id="4_h0lnh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_775yo"]
+radius = 7.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6o4q"]
+atlas = ExtResource("2_5wm4f")
+region = Rect2(44, 0, 22, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toror"]
+atlas = ExtResource("2_5wm4f")
+region = Rect2(0, 0, 22, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow2q1"]
+atlas = ExtResource("2_5wm4f")
+region = Rect2(22, 0, 22, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3jc27"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6o4q")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toror")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ow2q1")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+floor_snap_length = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_775yo")
+
+[node name="Looks" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Looks"]
+sprite_frames = SubResource("SpriteFrames_3jc27")
+animation = &"jump"
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_jn5wo")
+parent_path = NodePath("..")
+starting_state_path = NodePath("Walk")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("3_l4c87")
+air_path = NodePath("../Air")
+
+[node name="Air" type="Node" parent="StateMachine"]
+script = ExtResource("4_h0lnh")
+walk_path = NodePath("../Walk")
