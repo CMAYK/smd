@@ -13,9 +13,8 @@ projectile = ExtResource("2_550cd")
 spawn_pos = NodePath("shoot_pos")
 damage = 3
 pierce = 1
-reload = 40.0
+reload = 50.0
 radius = 130.0
-knockback = 100.0
 projectile_speed = 5.0
 
 [node name="sprite" type="Sprite2D" parent="."]

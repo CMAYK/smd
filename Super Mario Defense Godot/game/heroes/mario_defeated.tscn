@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqf4y58eoehhx"]
+[gd_scene load_steps=6 format=3 uid="uid://cqf4y58eoehhx"]
 
 [ext_resource type="Texture2D" uid="uid://fi7ybmruflws" path="res://game/heroes/small_mario.png" id="1_4gc57"]
 [ext_resource type="Script" path="res://game/heroes/hero_defeated.gd" id="1_cyy6m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lfuq2"]
 
 [sub_resource type="Animation" id="Animation_usesl"]
 resource_name = "default"
@@ -27,7 +29,12 @@ _data = {
 
 [node name="mario_defeated" type="CharacterBody2D"]
 position = Vector2(8, -12)
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_cyy6m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lfuq2")
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_4gc57")
@@ -39,3 +46,7 @@ region_rect = Rect2(91, 0, 16, 24)
 libraries = {
 "": SubResource("AnimationLibrary_gjxsr")
 }
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
