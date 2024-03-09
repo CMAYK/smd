@@ -2,7 +2,7 @@ extends State
 
 var max_speed: float = 75.0
 var acceleration: float = 4.0
-var gravity: float = 15.0
+var gravity: float = 10.0
 
 # we want to export the nodes paths and return them when we want to switch states, see state machine on why
 @export_node_path() var walk_path: NodePath

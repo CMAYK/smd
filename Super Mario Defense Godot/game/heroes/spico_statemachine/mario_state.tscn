@@ -45,7 +45,8 @@ animations = [{
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
-floor_snap_length = 0.0
+floor_max_angle = 1.309
+floor_snap_length = 19.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
