@@ -4,21 +4,29 @@
 [ext_resource type="Texture2D" uid="uid://h1tpqvlblg8h" path="res://game/towers/tower_base/sprites/redbox.png" id="2_yaic4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jwww7"]
-size = Vector2(2, 1.00001)
+size = Vector2(3, 1.50001)
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 16
 script = ExtResource("1_g0y5d")
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
+visible = false
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_jwww7")
 
 [node name="sprite" type="Sprite2D" parent="."]
+visible = false
 z_index = -1
-position = Vector2(0, 3.55271e-15)
-scale = Vector2(0.0625, 0.125)
+scale = Vector2(0.1, 0.2)
 texture = ExtResource("2_yaic4")
 flip_h = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(-48, 64)
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -12, 16)
+width = 2.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

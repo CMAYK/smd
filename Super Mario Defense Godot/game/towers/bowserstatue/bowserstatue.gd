@@ -21,14 +21,13 @@ var target_pos : Vector2
 
 var colortime = 1
 var colortimer = 1
-@onready var colormod = 0
+var colormod = 0
 var color
 
 func _ready():
 	$sight/radius.shape.set_radius(radius)
 
 func _physics_process(delta):
-
 	colortimer -= 1
 	if colortimer <= 0:
 		colortimer = colortime
@@ -44,7 +43,7 @@ func _physics_process(delta):
 
 	if !hero_list.is_empty():
 		current_hero = _get_first(hero_list)
-		target_pos = current_hero.get_parent().target_pos.global_position
+		target_pos = current_hero.get_parent().target_pos.position
 		if reloaded:
 			_shoot()
 			await get_tree().create_timer(0.3).timeout
@@ -59,6 +58,7 @@ func _shoot():
 	p.damage = damage
 	p.knockback = knockback
 	p.pierce = pierce
+	p.colormod = colormod
 	get_parent().add_child(p)
 
 	#var sp = sound_player.instantiate()

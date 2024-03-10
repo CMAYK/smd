@@ -12,10 +12,9 @@ script = ExtResource("1_m0fc3")
 projectile = ExtResource("2_uevh4")
 spawn_pos = NodePath("shoot_pos")
 damage = 1
-pierce = 1
-reload = 125.0
+reload = 150.0
 radius = 50.0
-projectile_speed = 300.0
+projectile_speed = 150.0
 
 [node name="sprite" type="Sprite2D" parent="."]
 position = Vector2(-4, -20)
