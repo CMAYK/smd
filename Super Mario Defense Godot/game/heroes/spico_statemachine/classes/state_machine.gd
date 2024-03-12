@@ -5,7 +5,7 @@ extends Node
 @export_node_path() var starting_state_path: NodePath
 
 @onready var parent = get_node(parent_path)
-@onready var sprite = get_parent().get_node("Looks/AnimatedSprite2D")
+@onready var sprite = get_parent().get_node("looks/sprite")
 var current_state: Node
 
 func _ready():

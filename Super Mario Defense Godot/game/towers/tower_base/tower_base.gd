@@ -32,7 +32,7 @@ func _physics_process(delta):
 
 	if !hero_list.is_empty():
 		current_hero = _get_first(hero_list)
-		target_pos = current_hero.get_parent().target_pos.global_position
+		target_pos = current_hero.global_position
 		if reloaded:
 			_shoot()
 			reloaded = false

@@ -3,7 +3,7 @@ extends CharacterBody2D
 var gravity = 1000
 
 var speed = 75.0
-var health = 24
+var health = 12
 
 @onready var playstate = get_parent().get_parent()
 @onready var sound_player = playstate.sound_player

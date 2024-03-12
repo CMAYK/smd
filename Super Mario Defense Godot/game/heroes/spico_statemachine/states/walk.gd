@@ -22,9 +22,15 @@ func physics_process(delta):
 	# if you want to change states do it after move and slide so everything updates nicely, as return
 	# exits the loop
 	parent.move_and_slide()
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		return get_node(air_path)
+	
 	if parent.is_on_floor():
 		var floor_normal = parent.get_floor_normal()
-		parent.rotation = lerp(parent.rotation, floor_normal.angle()+ PI / 2, 0.1)
+		parent.rotation = lerp(parent.rotation, floor_normal.angle()+ PI / 2, 0.2)
+	else:
+		return get_node(air_path)
 
 func exit():
 	pass

@@ -8,7 +8,8 @@ var gravity: float = 10.0
 @export_node_path() var walk_path: NodePath
 
 func enter():
-	state_machine.sprite.play("fall")
+	parent.velocity.y -= 200
+	state_machine.sprite.play("jump")
 
 func physics_process(delta):
 	parent.velocity.x = clamp(parent.velocity.x + (sign(state_machine.sprite.scale.x) * acceleration), -max_speed, max_speed)

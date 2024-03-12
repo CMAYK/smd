@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dohi6t4mjk24j"]
+[gd_scene load_steps=6 format=3 uid="uid://dohi6t4mjk24j"]
 
 [ext_resource type="Script" path="res://scenes/playstate.gd" id="1_extvo"]
-[ext_resource type="PackedScene" uid="uid://cergusca085ev" path="res://game/towers/bowserstatue/bowserstatue.tscn" id="2_2uhlu"]
 [ext_resource type="Script" path="res://game/scripts/camera_main.gd" id="2_gvj3b"]
+[ext_resource type="PackedScene" uid="uid://cg4ahcg7jht38" path="res://game/towers/tower_base/tower_base.tscn" id="4_4tnc6"]
 [ext_resource type="Texture2D" uid="uid://cbdi7cd5rx3yh" path="res://misc/sprites/Sprite-0008.png" id="4_wec3c"]
+[ext_resource type="PackedScene" uid="uid://6plej4v35iwp" path="res://game/towers/ballnchain/ballnchain.tscn" id="5_oyr77"]
 
 [node name="playstate" type="Node2D"]
 script = ExtResource("1_extvo")
@@ -18,8 +19,12 @@ texture = ExtResource("4_wec3c")
 
 [node name="towers" type="Node2D" parent="."]
 
-[node name="Bowser Statue" parent="towers" instance=ExtResource("2_2uhlu")]
-position = Vector2(667, -64)
+[node name="BallnChain" parent="towers" instance=ExtResource("5_oyr77")]
+position = Vector2(1240, -124)
+
+[node name="Node2D" parent="towers" instance=ExtResource("4_4tnc6")]
+position = Vector2(779, -94)
+knockback = 200.0
 
 [node name="heros" type="Node2D" parent="."]
 
