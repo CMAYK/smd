@@ -1,32 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://bop5n5aywovnk"]
+[gd_scene load_steps=5 format=3 uid="uid://bop5n5aywovnk"]
 
 [ext_resource type="Script" path="res://game/towers/bowserstatue/bowserstatue_bullet.gd" id="1_g0y5d"]
-[ext_resource type="Texture2D" uid="uid://h1tpqvlblg8h" path="res://game/towers/tower_base/sprites/redbox.png" id="2_yaic4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jwww7"]
-size = Vector2(3, 1.50001)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hkfi8"]
+size = Vector2(5.65685, 1.06066)
+
+[sub_resource type="Animation" id="Animation_xxmh5"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [PackedVector2Array(2, -2, -2, 2), PackedVector2Array(2, -2, -2, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vhi3v"]
+_data = {
+"new_animation": SubResource("Animation_xxmh5")
+}
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 16
 script = ExtResource("1_g0y5d")
 
-[node name="hitbox" type="CollisionShape2D" parent="."]
-visible = false
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_jwww7")
-
-[node name="sprite" type="Sprite2D" parent="."]
-visible = false
-z_index = -1
-scale = Vector2(0.1, 0.2)
-texture = ExtResource("2_yaic4")
-flip_h = true
-
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(-48, 64)
+target_position = Vector2(-64, 64)
 
 [node name="Line2D" type="Line2D" parent="."]
-points = PackedVector2Array(0, 0, -12, 16)
-width = 2.0
+points = PackedVector2Array(2, -2, -2, 2)
+width = 1.0
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.76837e-07)
+rotation = -0.785398
+shape = SubResource("RectangleShape2D_hkfi8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vhi3v")
+}
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

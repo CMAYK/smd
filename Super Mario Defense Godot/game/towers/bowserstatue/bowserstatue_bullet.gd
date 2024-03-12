@@ -9,35 +9,36 @@ var damage
 var knockback
 var pierce
 var dopierce
+var color = [Color.YELLOW, Color.RED, Color.YELLOW, Color.WHITE, Color.RED]
 
-var colormod
-var color
+var cast_point
+var line_point
 
 @onready var playstate = get_parent().get_parent()
 @onready var sound_player = playstate.sound_player
 
 func _ready():
+	$Line2D.modulate = color[globals.colormod]
 	#0 pierce means infinate pierce
 	if pierce <= 0:
 		dopierce = false
 	else:
 		dopierce = true
 
-	#if direction != null:
-		#$sprite.look_at(direction)
-		#look_vector = direction - global_position
-#
-		##fixes the bullet spite orentation
-		#if look_vector.x > 0:
-			#$sprite.flip_v = false
-		#else:
-			#$sprite.flip_v = true
-
 func _physics_process(delta):
+	$RayCast2D.force_raycast_update()
 
-	#move = move.move_toward(look_vector, delta)
-	#move = move.normalized() * speed
-	global_position = global_position.move_toward(Vector2(global_position.x-48, global_position.y+64), speed * delta)
+	if $RayCast2D.is_colliding():
+		cast_point = to_local($RayCast2D.get_collision_point())
+		line_point = $Line2D.points[1]
+
+		var tween = get_tree().create_tween()
+		tween.tween_method(func(interpolate_position: Vector2) -> void: $Line2D.points = [line_point, interpolate_position], line_point, cast_point, 0)
+		tween.tween_property($hitbox, "position", cast_point, 1)
+
+	$Line2D.modulate = color[globals.colormod]
+
+	#$hitbox.global_position = global_position.move_toward(Vector2(global_position.x-64, global_position.y+64), speed * delta)
 
 	if dopierce:
 		if pierce <= 0:

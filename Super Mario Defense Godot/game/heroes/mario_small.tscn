@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dki1o55dnt3no"]
+[gd_scene load_steps=10 format=3 uid="uid://dki1o55dnt3no"]
 
 [ext_resource type="Script" path="res://game/heroes/hero.gd" id="1_68may"]
 [ext_resource type="Texture2D" uid="uid://fi7ybmruflws" path="res://game/heroes/small_mario.png" id="2_3mj72"]
+[ext_resource type="FontFile" uid="uid://bol66u7mfsyck" path="res://misc/sprites/font_main.png" id="3_ms7cu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sxhxk"]
 radius = 6.0
@@ -94,6 +95,7 @@ offset_right = 36.0
 offset_bottom = -21.0
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(0, 16)
+theme_override_fonts/font = ExtResource("3_ms7cu")
 text = "00"
 metadata/_edit_use_anchors_ = true
 
