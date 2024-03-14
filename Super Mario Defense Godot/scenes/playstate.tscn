@@ -1,26 +1,116 @@
-[gd_scene load_steps=6 format=3 uid="uid://dohi6t4mjk24j"]
+[gd_scene load_steps=13 format=3 uid="uid://dohi6t4mjk24j"]
 
 [ext_resource type="Script" path="res://scenes/playstate.gd" id="1_extvo"]
 [ext_resource type="Script" path="res://game/scripts/camera_main.gd" id="2_gvj3b"]
+[ext_resource type="Texture2D" uid="uid://c7251mgmyyyqd" path="res://misc/sprites/UI_Elements.png" id="3_21fef"]
 [ext_resource type="PackedScene" uid="uid://cg4ahcg7jht38" path="res://game/towers/tower_base/tower_base.tscn" id="4_4tnc6"]
+[ext_resource type="FontFile" uid="uid://bol66u7mfsyck" path="res://misc/sprites/font_main.png" id="4_oknm4"]
 [ext_resource type="Texture2D" uid="uid://cbdi7cd5rx3yh" path="res://misc/sprites/Sprite-0008.png" id="4_wec3c"]
-[ext_resource type="PackedScene" uid="uid://6plej4v35iwp" path="res://game/towers/ballnchain/ballnchain.tscn" id="5_oyr77"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjt31"]
+atlas = ExtResource("3_21fef")
+region = Rect2(33, 17, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4b4js"]
+atlas = ExtResource("3_21fef")
+region = Rect2(50, 17, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcmnr"]
+atlas = ExtResource("3_21fef")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tj4g6"]
+atlas = ExtResource("3_21fef")
+region = Rect2(17, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2hau"]
+atlas = ExtResource("3_21fef")
+region = Rect2(34, 9, 26, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyefd"]
+atlas = ExtResource("3_21fef")
+region = Rect2(0, 17, 32, 32)
 
 [node name="playstate" type="Node2D"]
 script = ExtResource("1_extvo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+[node name="sprites" type="Node2D" parent="CanvasLayer"]
+
+[node name="temp" type="Sprite2D" parent="CanvasLayer/sprites"]
+visible = false
+modulate = Color(1, 1, 1, 0.301961)
 position = Vector2(200, 28)
 texture = ExtResource("4_wec3c")
+metadata/_edit_lock_ = true
+
+[node name="uiscrollL" type="Sprite2D" parent="CanvasLayer/sprites"]
+position = Vector2(148, 21.5)
+texture = SubResource("AtlasTexture_gjt31")
+
+[node name="uiscrollR" type="Sprite2D" parent="CanvasLayer/sprites"]
+position = Vector2(372, 21.5)
+texture = SubResource("AtlasTexture_4b4js")
+
+[node name="uipausebut" type="Sprite2D" parent="CanvasLayer/sprites"]
+position = Vector2(16, 16)
+texture = SubResource("AtlasTexture_xcmnr")
+
+[node name="uiskipbut" type="Sprite2D" parent="CanvasLayer/sprites"]
+position = Vector2(16, 36)
+texture = SubResource("AtlasTexture_tj4g6")
+
+[node name="uiwavetext" type="Sprite2D" parent="CanvasLayer/sprites"]
+position = Vector2(53, 35.5)
+texture = SubResource("AtlasTexture_g2hau")
+
+[node name="wavetag" type="Label" parent="CanvasLayer/sprites"]
+offset_left = 66.0
+offset_top = 32.0
+offset_right = 84.0
+offset_bottom = 51.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("4_oknm4")
+theme_override_font_sizes/font_size = 8
+text = "ab
+qr
+"
+
+[node name="cointag" type="Label" parent="CanvasLayer/sprites"]
+offset_left = 40.0
+offset_top = 20.0
+offset_right = 58.0
+offset_bottom = 29.0
+theme_override_fonts/font = ExtResource("4_oknm4")
+theme_override_font_sizes/font_size = 8
+text = "('"
+
+[node name="lifetag" type="Label" parent="CanvasLayer/sprites"]
+offset_left = 40.0
+offset_top = 8.0
+offset_right = 58.0
+offset_bottom = 17.0
+theme_override_fonts/font = ExtResource("4_oknm4")
+theme_override_font_sizes/font_size = 8
+text = ")'"
+
+[node name="uiweaponcontainer" type="Sprite2D" parent="CanvasLayer/sprites"]
+position = Vector2(180, 21)
+texture = SubResource("AtlasTexture_gyefd")
+
+[node name="weaponcost" type="Label" parent="CanvasLayer/sprites"]
+offset_left = 162.0
+offset_top = 4.0
+offset_right = 186.0
+offset_bottom = 13.0
+theme_override_fonts/font = ExtResource("4_oknm4")
+theme_override_font_sizes/font_size = 8
+text = "(70"
 
 [node name="layout" type="Node2D" parent="."]
 
 [node name="towers" type="Node2D" parent="."]
-
-[node name="BallnChain" parent="towers" instance=ExtResource("5_oyr77")]
-position = Vector2(1240, -124)
 
 [node name="Node2D" parent="towers" instance=ExtResource("4_4tnc6")]
 position = Vector2(779, -94)

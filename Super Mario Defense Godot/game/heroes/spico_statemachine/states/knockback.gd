@@ -15,7 +15,6 @@ func enter():
 	hit_dir = parent.hit_pos.direction_to(parent.global_position)
 	parent.velocity.x = parent.knockback_amt * hit_dir.x
 	state_machine.sprite.play("fall")
-	
 
 func physics_process(delta):
 	parent.velocity.x += traction * -hit_dir.x

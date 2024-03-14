@@ -8,7 +8,6 @@ func _ready():
 	_update_window_res(1280, 720)
 
 func _physics_process(delta):
-
 	#this changes scrolling input method
 	if Input.is_action_just_released("test5"):
 		scroll_method += 1
@@ -43,7 +42,6 @@ func _physics_process(delta):
 	self.position.x = clamp(self.position.x, get_viewport_rect().size.x /2, limit_right - get_viewport_rect().size.x /2)
 
 func _limit_camera(tilemap:TileMap):
-	
 	var mapRect = tilemap.get_used_rect()
 	var tileSize = tilemap.rendering_quadrant_size
 	var worldSizeInPixels = mapRect.size * tileSize
@@ -54,9 +52,7 @@ func _update_window_res(size_x,size_y):
 	print(str(size_y) + "p")
 	center_window()
 
-
 func center_window() -> void:
-
 	var window = get_window()
 	var screen = window.current_screen
 	var screen_rect = DisplayServer.screen_get_usable_rect(screen)
