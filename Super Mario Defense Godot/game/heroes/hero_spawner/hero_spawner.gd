@@ -1,7 +1,6 @@
 extends Node2D
 
 var mario_path = preload("res://game/heroes/spico_statemachine/mario_state.tscn")
-var fast_path = preload("res://game/heroes/mario_fast.tscn")
 @export var spawn_time = 300
 var spawn_timer = spawn_time
 
