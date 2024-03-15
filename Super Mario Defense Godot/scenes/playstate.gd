@@ -1,6 +1,6 @@
 extends Node2D
 
-var layout_name:String = "layout_test"
+var layout_name:String = "level_1"
 var layout
 var tilemap
 
@@ -17,7 +17,7 @@ func _ready():
 	camera._limit_camera(tilemap)
 
 func _load_layout():
-	var layout_path = load("res://game/layouts/%s.tscn" % [layout_name])
+	var layout_path = load("res://game/layouts/stages/%s.tscn" % [layout_name])
 	var layout_instance = layout_path.instantiate()
 	$layout.add_child(layout_instance)
 	layout = $layout.get_child(0)
