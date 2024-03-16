@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://7ac6o217uj03"]
+
+[ext_resource type="Texture2D" uid="uid://obb8itjcx1kd" path="res://the.png" id="1_p2lcy"]
+[ext_resource type="Script" path="res://game/scripts/camera_main.gd" id="2_8cc68"]
+
+[node name="titlescreen" type="Node2D"]
+
+[node name="The" type="Sprite2D" parent="."]
+position = Vector2(200, 112)
+texture = ExtResource("1_p2lcy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(200, 112)
+script = ExtResource("2_8cc68")
