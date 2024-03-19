@@ -14,6 +14,7 @@ func _ready():
 	_load_layout()
 	_load_spawner()
 	_load_castle()
+	_load_interface()
 	camera._limit_camera(tilemap)
 
 func _load_layout():
@@ -32,3 +33,6 @@ func _load_castle():
 	var c_instance = castle.instantiate()
 	c_instance.position = layout.castle_pos.position
 	$heros.add_child(c_instance)
+
+func _load_interface():
+	pass
