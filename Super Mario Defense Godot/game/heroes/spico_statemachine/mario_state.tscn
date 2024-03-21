@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dkbwunpbi0wse"]
+[gd_scene load_steps=20 format=3 uid="uid://dkbwunpbi0wse"]
 
 [ext_resource type="Script" path="res://game/heroes/spico_statemachine/mario_state.gd" id="1_0glw0"]
 [ext_resource type="Texture2D" uid="uid://fi7ybmruflws" path="res://game/heroes/small_mario.png" id="2_5wm4f"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://game/heroes/spico_statemachine/states/die.gd" id="6_kcdnh"]
 [ext_resource type="Script" path="res://game/heroes/spico_statemachine/states/jump.gd" id="7_fcm5b"]
 [ext_resource type="Script" path="res://game/heroes/spico_statemachine/states/knockback.gd" id="8_g2rsk"]
+[ext_resource type="Script" path="res://game/heroes/spico_statemachine/fly.gd" id="8_wnxt0"]
 [ext_resource type="FontFile" uid="uid://bol66u7mfsyck" path="res://misc/sprites/font_main.png" id="9_key5d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_775yo"]
@@ -92,6 +93,7 @@ jump_path = NodePath("StateMachine/Jump")
 knockback_path = NodePath("StateMachine/Knockback")
 die_path = NodePath("StateMachine/Die")
 walk_path = NodePath("StateMachine/Walk")
+fly_path = NodePath("StateMachine/Fly")
 collision = NodePath("collision")
 area2d = NodePath("hurtbox")
 
@@ -134,6 +136,9 @@ walk_path = NodePath("../Walk")
 [node name="Jump" type="Node" parent="StateMachine"]
 script = ExtResource("7_fcm5b")
 walk_path = NodePath("../Walk")
+
+[node name="Fly" type="Node" parent="StateMachine"]
+script = ExtResource("8_wnxt0")
 
 [node name="Knockback" type="Node" parent="StateMachine"]
 script = ExtResource("8_g2rsk")

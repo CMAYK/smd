@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export_node_path() var knockback_path: NodePath
 @export_node_path() var die_path: NodePath
 @export_node_path() var walk_path: NodePath
+@export_node_path() var fly_path: NodePath
 @export var collision: CollisionShape2D
 @export var area2d: Area2D
 
@@ -22,7 +23,7 @@ func _ready():
 func _physics_process(delta):
 	$health.rotation = -self.rotation
 	if Input.is_action_just_pressed("ui_accept"):
-		state_machine.change_state(get_node(jump_path)) 
+		state_machine.change_state(get_node(fly_path)) 
 
 func _on_hurtbox_area_entered(area):
 	if area:
