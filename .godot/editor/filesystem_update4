@@ -1,2 +1,7 @@
 res://scripts/hammer.gd
 res://scripts/tower.gd
+res://scripts/boo.gd
+res://scripts/game_manager.gd
+res://scripts/main_level.gd
+res://scenes/hammer.tscn
+res://scripts/wave_spawner.gd

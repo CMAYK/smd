@@ -8,16 +8,15 @@ var damage_per_tick: float = 0.3
 var tick_rate: float = 0.2
 var lifetime: float = 5.0
 var attached: bool = false
+var launch_velocity: Vector2 = Vector2.ZERO
+var source_range_area: Area2D = null  # Reference to parent tower's range area
 
 var float_time: float = 0.0
 var damage_timer: float = 0.0
-var base_y: float = 0.0
+var launch_phase: bool = true
+var launch_timer: float = 0.3  # Duration of upward launch
 
 @onready var sprite: ColorRect = $Sprite
-
-
-func _ready() -> void:
-	base_y = global_position.y
 
 
 func _process(delta: float) -> void:
@@ -26,33 +25,43 @@ func _process(delta: float) -> void:
 		_fade_out()
 		return
 
-	# Check if target is gone
-	if not is_instance_valid(target_enemy) or not target_enemy.is_alive:
-		_fade_out()
+	float_time += delta * 3.0
+
+	# Launch phase - pop upward first
+	if launch_phase:
+		global_position += launch_velocity * delta
+		launch_velocity.y += 200.0 * delta  # Decelerate upward movement
+		launch_timer -= delta
+		if launch_timer <= 0.0:
+			launch_phase = false
 		return
 
-	float_time += delta * 3.0
+	# Check if target is gone - try to retarget
+	if not is_instance_valid(target_enemy) or not target_enemy.is_alive:
+		attached = false
+		target_enemy = _find_new_target()
+		if target_enemy == null:
+			_fade_out()
+			return
 
 	if not attached:
 		# Float toward target
 		var target_pos: Vector2 = target_enemy.global_position + Vector2(0, -8)
-		var dir: Vector2 = (target_pos - global_position)
+		var dir: Vector2 = target_pos - global_position
 		var dist: float = dir.length()
 
 		if dist < 6.0:
-			# Attach to enemy
 			attached = true
 			damage_timer = 0.0
 		else:
 			dir = dir.normalized()
-			# Floaty movement: move toward target but oscillate vertically
 			var move := dir * move_speed * delta
 			global_position += move
 			global_position.y += sin(float_time) * float_amplitude * delta * 2.0
 	else:
-		# Stay attached to enemy, follow their position
+		# Stay attached, follow enemy
 		global_position = target_enemy.global_position + Vector2(0, -10)
-		global_position.y += sin(float_time) * 2.0  # Subtle bob
+		global_position.y += sin(float_time) * 2.0
 
 		# Deal DPS
 		damage_timer -= delta
@@ -61,9 +70,33 @@ func _process(delta: float) -> void:
 				target_enemy.take_damage(damage_per_tick)
 			damage_timer = tick_rate
 
-	# Transparency pulse when attached
+	# Pulse transparency when attached
 	if sprite and attached:
 		sprite.modulate.a = 0.7 + sin(float_time * 2.0) * 0.2
+
+
+func _find_new_target() -> Enemy:
+	# Find the most advanced mario within the source tower's range
+	# If we don't have a range reference, search all enemies
+	var best: Enemy = null
+	var best_x: float = -1.0
+
+	if is_instance_valid(source_range_area):
+		# Use the tower's range area
+		for body in source_range_area.get_overlapping_bodies():
+			if body is Enemy and body.is_alive:
+				if body.global_position.x > best_x:
+					best_x = body.global_position.x
+					best = body as Enemy
+	else:
+		# Fallback: search all enemies in scene
+		for child in get_tree().current_scene.get_children():
+			if child is Enemy and child.is_alive:
+				if child.global_position.x > best_x:
+					best_x = child.global_position.x
+					best = child as Enemy
+
+	return best
 
 
 func _fade_out() -> void:

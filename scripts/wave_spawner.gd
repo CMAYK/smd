@@ -5,7 +5,7 @@ signal all_waves_complete()
 signal wave_enemies_spawned(wave_number: int)
 
 @export var spawn_x: float = -10.0
-@export var spawn_y: float = 160.0  # Ground surface Y
+@export var spawn_y: float = 192.0  # Ground surface Y
 @export var castle_x: float = 700.0
 
 var enemy_scene: PackedScene = preload("res://scenes/enemy.tscn")

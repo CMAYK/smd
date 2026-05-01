@@ -3,8 +3,8 @@ extends Node2D
 const VIEWPORT_W := 358
 const VIEWPORT_H := 224
 const TILE := 16
-const GROUND_HEIGHT := TILE * 4
-const GROUND_Y := VIEWPORT_H - GROUND_HEIGHT  # 160
+const GROUND_HEIGHT := TILE * 2  # 32px
+const GROUND_Y := VIEWPORT_H - GROUND_HEIGHT  # 192
 const BATTLEFIELD_W := 1074
 
 const SCROLL_SPEED := 150.0
@@ -20,6 +20,7 @@ var drag_tower_type: String = ""
 var selected_tower: Tower = null
 var level_ended: bool = false
 var drag_preview: ColorRect = null
+var hammer_bro_preview: Sprite2D = null
 var drag_just_started: bool = false
 
 @onready var camera: Camera2D = $Camera2D
@@ -65,6 +66,18 @@ func _ready() -> void:
 	drag_preview.visible = false
 	drag_preview.z_index = 100
 	add_child(drag_preview)
+
+	# Hammer bro placement preview sprite
+	var preview_tex := load("res://resources/sprites/hammer_bro_preview.png") as Texture2D
+	if preview_tex:
+		hammer_bro_preview = Sprite2D.new()
+		hammer_bro_preview.texture = preview_tex
+		hammer_bro_preview.visible = false
+		hammer_bro_preview.z_index = 100
+		hammer_bro_preview.modulate.a = 0.6
+		# Origin shifted 32px lower to align with actual tower placement
+		hammer_bro_preview.offset = Vector2(0, -29 + 32)
+		add_child(hammer_bro_preview)
 
 	# Setup shop buttons
 	shop_buttons = [
@@ -149,8 +162,7 @@ func _input(event: InputEvent) -> void:
 					_handle_left_click()
 				MOUSE_BUTTON_RIGHT:
 					if dragging_tower:
-						dragging_tower = false
-						drag_preview.visible = false
+						_stop_dragging()
 					else:
 						_deselect_tower()
 
@@ -170,10 +182,16 @@ func _input(event: InputEvent) -> void:
 					_update_tower_panel()
 			KEY_ESCAPE:
 				if dragging_tower:
-					dragging_tower = false
-					drag_preview.visible = false
+					_stop_dragging()
 				else:
 					_deselect_tower()
+
+
+func _stop_dragging() -> void:
+	dragging_tower = false
+	drag_preview.visible = false
+	if hammer_bro_preview:
+		hammer_bro_preview.visible = false
 
 
 func _handle_left_click() -> void:
@@ -199,14 +217,32 @@ func _try_place_tower(world_pos: Vector2) -> void:
 
 	if not GameManager.can_afford(cost):
 		_show_message("NOT ENOUGH COINS")
-		dragging_tower = false
-		drag_preview.visible = false
+		_stop_dragging()
 		return
 
 	var place_pos := world_pos
+
+	# Ground-only towers snap to ground
 	if def["ground_only"]:
 		place_pos.y = float(GROUND_Y)
+	else:
+		# Non-ground towers: apply height constraints
+		# Global maximum height (minimum Y)
+		var max_height_y: float = 72.0
+		place_pos.y = maxf(place_pos.y, max_height_y)
 
+		# Tower-specific minimum height clearance from ground
+		if def.has("min_height_clearance"):
+			var clearance: float = def["min_height_clearance"]
+			# For hammer bro, clearance is from lowest pendulum point
+			# Pendulum drops 32px from anchor, so anchor must be 48+32=80px above ground
+			var extra_drop: float = 0.0
+			if drag_tower_type == "hammer_bro":
+				extra_drop = 32.0  # pendulum_drop
+			var max_y: float = float(GROUND_Y) - clearance - extra_drop
+			place_pos.y = minf(place_pos.y, max_y)
+
+	# X bounds
 	if place_pos.x < 10.0 or place_pos.x > float(BATTLEFIELD_W) - 40.0:
 		_show_message("CANNOT PLACE HERE")
 		return
@@ -219,23 +255,20 @@ func _try_place_tower(world_pos: Vector2) -> void:
 	add_child(tower)
 
 	if not GameManager.can_afford(cost):
-		dragging_tower = false
-		drag_preview.visible = false
+		_stop_dragging()
 
 
 func _try_select_tower_at(world_pos: Vector2) -> bool:
-	var closest_tower: Tower = null
-	var closest_dist: float = 16.0
+	var best_tower: Tower = null
 
 	for child in get_children():
 		if child is Tower:
-			var dist: float = child.global_position.distance_to(world_pos)
-			if dist < closest_dist:
-				closest_dist = dist
-				closest_tower = child as Tower
+			var tower := child as Tower
+			if tower.is_point_on_tower(world_pos):
+				best_tower = tower
 
-	if closest_tower:
-		_select_tower(closest_tower)
+	if best_tower:
+		_select_tower(best_tower)
 		return true
 	return false
 
@@ -288,13 +321,43 @@ func _update_drag_preview() -> void:
 	if dragging_tower and drag_tower_type != "":
 		var mouse_world := get_global_mouse_position()
 		var def: Dictionary = GameManager.tower_defs[drag_tower_type]
-		var preview_y := float(GROUND_Y) - 14.0 if def["ground_only"] else mouse_world.y - 7.0
-		drag_preview.position = Vector2(mouse_world.x - 5.0, preview_y)
-		drag_preview.color = def.get("color", Color(0.5, 0.5, 0.5))
-		drag_preview.color.a = 0.5
-		drag_preview.visible = true
+
+		if drag_tower_type == "hammer_bro":
+			# Use the preview sprite for hammer bro
+			drag_preview.visible = false
+			if hammer_bro_preview:
+				var preview_y: float = mouse_world.y
+				preview_y = maxf(preview_y, 72.0)
+				if def.has("min_height_clearance"):
+					var clearance: float = def["min_height_clearance"]
+					var max_y: float = float(GROUND_Y) - clearance - 32.0
+					preview_y = minf(preview_y, max_y)
+				hammer_bro_preview.global_position = Vector2(mouse_world.x, preview_y)
+				hammer_bro_preview.visible = true
+		else:
+			if hammer_bro_preview:
+				hammer_bro_preview.visible = false
+
+			var preview_y: float
+			if def["ground_only"]:
+				preview_y = float(GROUND_Y) - 14.0
+			else:
+				preview_y = mouse_world.y - 7.0
+				preview_y = maxf(preview_y, 72.0 - 7.0)
+				if def.has("min_height_clearance"):
+					var clearance: float = def["min_height_clearance"]
+					var extra_drop: float = 0.0
+					var max_y: float = float(GROUND_Y) - clearance - extra_drop - 7.0
+					preview_y = minf(preview_y, max_y)
+
+			drag_preview.position = Vector2(mouse_world.x - 5.0, preview_y)
+			drag_preview.color = def.get("color", Color(0.5, 0.5, 0.5))
+			drag_preview.color.a = 0.5
+			drag_preview.visible = true
 	else:
 		drag_preview.visible = false
+		if hammer_bro_preview:
+			hammer_bro_preview.visible = false
 
 
 func _update_hud() -> void:

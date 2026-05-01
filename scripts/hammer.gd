@@ -2,29 +2,43 @@ extends Area2D
 class_name Hammer
 
 var velocity: Vector2 = Vector2.ZERO
-var fall_accel: float = 120.0
-var bounce_vy: float = -80.0
-var ground_y: float = 160.0
+var fall_accel: float = 300.0
+var bounce_vy: float = -40.0
+var ground_y: float = 192.0
 var damage_per_tick: float = 0.4
 var tick_rate: float = 0.15
 var has_bounced: bool = false
-var lifetime: float = 5.0
-var spin_angle: float = 0.0
+var lifetime: float = 4.0
 
-# Track per-enemy damage cooldowns
 var damage_timers: Dictionary = {}
+var anim_sprite: AnimatedSprite2D = null
 
-@onready var sprite: ColorRect = $Sprite
+
+func _ready() -> void:
+	# Create animated sprite from hammer spritesheet
+	# 133x16 image, 8 frames of 16x16 with 1px padding = 17px stride
+	var tex := load("res://resources/sprites/hammer_anim.png") as Texture2D
+	if tex:
+		anim_sprite = AnimatedSprite2D.new()
+		var frames := SpriteFrames.new()
+		frames.add_animation("spin")
+		var img: Image = tex.get_image()
+		for i in range(8):
+			var frame_img := img.get_region(Rect2i(i * 17, 0, 16, 16))
+			var frame_tex := ImageTexture.create_from_image(frame_img)
+			frames.add_frame("spin", frame_tex)
+		frames.set_animation_speed("spin", 16.0)
+		frames.set_animation_loop("spin", true)
+		anim_sprite.sprite_frames = frames
+		anim_sprite.play("spin")
+		add_child(anim_sprite)
+		# Hide the default ColorRect
+		$Sprite.visible = false
 
 
 func _process(delta: float) -> void:
 	velocity.y += fall_accel * delta
 	position += velocity * delta
-
-	# Spin visual
-	spin_angle += 12.0 * delta
-	if sprite:
-		sprite.rotation = spin_angle
 
 	# Bounce off ground once
 	if not has_bounced and position.y >= ground_y - 3.0:
@@ -48,12 +62,12 @@ func _process(delta: float) -> void:
 					body.take_damage(damage_per_tick)
 					damage_timers[eid] = tick_rate
 
-	# Clean up timers for bodies no longer overlapping
-	var overlapping_ids: Array[int] = []
+	# Clean up stale timers
+	var current_ids: Array[int] = []
 	for body in get_overlapping_bodies():
-		overlapping_ids.append(body.get_instance_id())
+		current_ids.append(body.get_instance_id())
 	for eid in damage_timers.keys():
-		if eid not in overlapping_ids:
+		if eid not in current_ids:
 			damage_timers.erase(eid)
 
 	lifetime -= delta
