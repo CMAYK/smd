@@ -5,3 +5,5 @@ res://scripts/game_manager.gd
 res://scripts/main_level.gd
 res://scenes/hammer.tscn
 res://scripts/wave_spawner.gd
+res://scripts/hud.gd
+res://scenes/hud.tscn

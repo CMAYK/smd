@@ -25,31 +25,12 @@ var drag_just_started: bool = false
 
 @onready var camera: Camera2D = $Camera2D
 @onready var wave_spawner: WaveSpawner = $WaveSpawner
-@onready var coin_label: Label = $HUD/HUDRoot/TopBar/CoinLabel
-@onready var hp_label: Label = $HUD/HUDRoot/TopBar/HPLabel
-@onready var wave_label: Label = $HUD/HUDRoot/TopBar/WaveLabel
-@onready var timer_label: Label = $HUD/HUDRoot/TimerLabel
-@onready var tower_panel: PanelContainer = $HUD/HUDRoot/TowerPanel
-@onready var upgrade_button: Button = $HUD/HUDRoot/TowerPanel/VBox/UpgradeButton
-@onready var sell_button: Button = $HUD/HUDRoot/TowerPanel/VBox/SellButton
-@onready var tower_info_label: Label = $HUD/HUDRoot/TowerPanel/VBox/InfoLabel
-@onready var message_label: Label = $HUD/HUDRoot/MessageLabel
-
-# Shop buttons
-@onready var buy_shell: Button = $HUD/HUDRoot/ShopBar/BuyShell
-@onready var buy_hammer: Button = $HUD/HUDRoot/ShopBar/BuyHammer
-@onready var buy_boo: Button = $HUD/HUDRoot/ShopBar/BuyBoo
-@onready var buy_stone: Button = $HUD/HUDRoot/ShopBar/BuyStone
-
-# All shop buttons and their tower types
-var shop_buttons: Array[Dictionary] = []
+@onready var hud: HUD = $HUD
 
 
 func _ready() -> void:
 	GameManager.start_level()
 	_connect_signals()
-	tower_panel.visible = false
-	message_label.visible = false
 
 	wave_spawner.castle_x = float(BATTLEFIELD_W) - 30.0
 	wave_spawner.spawn_y = float(GROUND_Y)
@@ -75,33 +56,28 @@ func _ready() -> void:
 		hammer_bro_preview.visible = false
 		hammer_bro_preview.z_index = 100
 		hammer_bro_preview.modulate.a = 0.6
-		# Origin shifted 32px lower to align with actual tower placement
 		hammer_bro_preview.offset = Vector2(0, -29 + 32)
 		add_child(hammer_bro_preview)
 
-	# Setup shop buttons
-	shop_buttons = [
-		{"button": buy_shell, "type": "koopa_shell_pipe"},
-		{"button": buy_hammer, "type": "hammer_bro"},
-		{"button": buy_boo, "type": "boo_chest"},
-		{"button": buy_stone, "type": "swinging_stone"},
-	]
-	for entry in shop_buttons:
-		var btn: Button = entry["button"]
-		var ttype: String = entry["type"]
-		btn.pressed.connect(_on_shop_buy.bind(ttype))
-
+	# Setup HUD
+	hud.setup_hp(GameManager.castle_max_hp)
 	_update_hud()
 
 
 func _connect_signals() -> void:
+	# GameManager signals
 	GameManager.coins_changed.connect(func(_v: int) -> void: _update_hud())
 	GameManager.castle_hp_changed.connect(func(_v: int) -> void: _update_hud())
 	GameManager.wave_started.connect(_on_wave_started)
 	GameManager.level_lost.connect(_on_level_lost)
 	wave_spawner.all_waves_complete.connect(_on_all_waves_complete)
-	upgrade_button.pressed.connect(_on_upgrade_pressed)
-	sell_button.pressed.connect(_on_sell_pressed)
+
+	# HUD signals
+	hud.tower_buy_requested.connect(_on_shop_buy)
+	hud.upgrade_requested.connect(_on_upgrade_pressed)
+	hud.sell_requested.connect(_on_sell_pressed)
+	hud.pause_requested.connect(_on_pause_pressed)
+	hud.next_wave_requested.connect(_on_next_wave_pressed)
 
 
 func _process(delta: float) -> void:
@@ -138,15 +114,7 @@ func _clamp_camera_target() -> void:
 
 func _is_mouse_over_gui() -> bool:
 	var mouse_screen: Vector2 = get_viewport().get_mouse_position()
-	# Shop bar area (top 26px)
-	if mouse_screen.y < 26.0:
-		return true
-	# Tower panel
-	if tower_panel.visible:
-		var panel_rect := Rect2(tower_panel.position, tower_panel.size)
-		if panel_rect.has_point(mouse_screen):
-			return true
-	return false
+	return hud.is_point_over_hud(mouse_screen)
 
 
 func _input(event: InputEvent) -> void:
@@ -175,11 +143,11 @@ func _input(event: InputEvent) -> void:
 			KEY_LEFT:
 				if selected_tower and selected_tower.facing_right:
 					selected_tower.flip_direction()
-					_update_tower_panel()
+					hud.refresh_tower_panel(selected_tower)
 			KEY_RIGHT:
 				if selected_tower and not selected_tower.facing_right:
 					selected_tower.flip_direction()
-					_update_tower_panel()
+					hud.refresh_tower_panel(selected_tower)
 			KEY_ESCAPE:
 				if dragging_tower:
 					_stop_dragging()
@@ -216,35 +184,28 @@ func _try_place_tower(world_pos: Vector2) -> void:
 	var cost: int = def["cost"]
 
 	if not GameManager.can_afford(cost):
-		_show_message("NOT ENOUGH COINS")
+		hud.show_message("NOT ENOUGH COINS")
 		_stop_dragging()
 		return
 
 	var place_pos := world_pos
 
-	# Ground-only towers snap to ground
 	if def["ground_only"]:
 		place_pos.y = float(GROUND_Y)
 	else:
-		# Non-ground towers: apply height constraints
-		# Global maximum height (minimum Y)
 		var max_height_y: float = 72.0
 		place_pos.y = maxf(place_pos.y, max_height_y)
 
-		# Tower-specific minimum height clearance from ground
 		if def.has("min_height_clearance"):
 			var clearance: float = def["min_height_clearance"]
-			# For hammer bro, clearance is from lowest pendulum point
-			# Pendulum drops 32px from anchor, so anchor must be 48+32=80px above ground
 			var extra_drop: float = 0.0
 			if drag_tower_type == "hammer_bro":
-				extra_drop = 32.0  # pendulum_drop
+				extra_drop = 32.0
 			var max_y: float = float(GROUND_Y) - clearance - extra_drop
 			place_pos.y = minf(place_pos.y, max_y)
 
-	# X bounds
 	if place_pos.x < 10.0 or place_pos.x > float(BATTLEFIELD_W) - 40.0:
-		_show_message("CANNOT PLACE HERE")
+		hud.show_message("CANNOT PLACE HERE")
 		return
 
 	GameManager.spend_coins(cost)
@@ -278,43 +239,14 @@ func _select_tower(tower: Tower) -> void:
 		selected_tower.set_selected(false)
 	selected_tower = tower
 	selected_tower.set_selected(true)
-	_update_tower_panel()
-	tower_panel.visible = true
+	hud.show_tower_panel(tower)
 
 
 func _deselect_tower() -> void:
 	if selected_tower:
 		selected_tower.set_selected(false)
 	selected_tower = null
-	tower_panel.visible = false
-
-
-func _update_tower_panel() -> void:
-	if not selected_tower:
-		return
-
-	var info := "LV%d %s\nDMG: %s RNG: %d\nSELL: %d" % [
-		selected_tower.current_level,
-		selected_tower.tower_data["name"],
-		_format_damage(selected_tower.damage),
-		int(selected_tower.attack_range),
-		selected_tower.sell_value
-	]
-	tower_info_label.text = info
-
-	if selected_tower.current_level >= selected_tower.tower_data["max_level"]:
-		upgrade_button.text = "MAX LEVEL"
-		upgrade_button.disabled = true
-	else:
-		var cost: int = selected_tower.get_upgrade_cost()
-		upgrade_button.text = "UPGRADE %d" % cost
-		upgrade_button.disabled = not GameManager.can_afford(cost)
-
-
-func _format_damage(dmg: float) -> String:
-	if dmg == floorf(dmg):
-		return str(int(dmg))
-	return "%.1f" % dmg
+	hud.hide_tower_panel()
 
 
 func _update_drag_preview() -> void:
@@ -323,7 +255,6 @@ func _update_drag_preview() -> void:
 		var def: Dictionary = GameManager.tower_defs[drag_tower_type]
 
 		if drag_tower_type == "hammer_bro":
-			# Use the preview sprite for hammer bro
 			drag_preview.visible = false
 			if hammer_bro_preview:
 				var preview_y: float = mouse_world.y
@@ -361,36 +292,19 @@ func _update_drag_preview() -> void:
 
 
 func _update_hud() -> void:
-	coin_label.text = "COINS: %d" % GameManager.coins
-	hp_label.text = "HP: %d" % GameManager.castle_hp
-	wave_label.text = "WAVE: %d" % GameManager.current_wave
+	hud.update_coins(GameManager.coins)
+	hud.update_wave(GameManager.current_wave, GameManager.total_waves)
+	hud.update_hp(GameManager.castle_hp)
 
-	# Update shop button text
-	for entry in shop_buttons:
-		var btn: Button = entry["button"]
-		var ttype: String = entry["type"]
-		var def: Dictionary = GameManager.tower_defs[ttype]
-		var short_name: String = def["name"].split(" ")[0]
-		btn.text = "%s %d" % [short_name, def["cost"]]
+	if selected_tower:
+		hud.refresh_tower_panel(selected_tower)
 
 
 func _update_timer_display() -> void:
 	if wave_spawner.is_waiting():
-		var t: int = ceili(wave_spawner.get_countdown())
-		timer_label.text = "NEXT WAVE: %d" % t
-		if wave_spawner.can_skip:
-			timer_label.text += " *SPACE*"
-		timer_label.visible = true
+		hud.update_timer(wave_spawner.get_countdown(), wave_spawner.can_skip)
 	else:
-		timer_label.visible = false
-
-
-func _show_message(text: String) -> void:
-	message_label.text = text
-	message_label.visible = true
-	var tween := create_tween()
-	tween.tween_interval(1.5)
-	tween.tween_callback(func() -> void: message_label.visible = false)
+		hud.hide_timer()
 
 
 # ===== SIGNAL HANDLERS =====
@@ -398,7 +312,7 @@ func _show_message(text: String) -> void:
 func _on_shop_buy(tower_type: String) -> void:
 	var def: Dictionary = GameManager.tower_defs[tower_type]
 	if not GameManager.can_afford(def["cost"]):
-		_show_message("NOT ENOUGH COINS")
+		hud.show_message("NOT ENOUGH COINS")
 		return
 	drag_tower_type = tower_type
 	dragging_tower = true
@@ -409,9 +323,9 @@ func _on_shop_buy(tower_type: String) -> void:
 func _on_upgrade_pressed() -> void:
 	if selected_tower:
 		if selected_tower.upgrade():
-			_update_tower_panel()
+			hud.refresh_tower_panel(selected_tower)
 		else:
-			_show_message("CANNOT UPGRADE")
+			hud.show_message("CANNOT UPGRADE")
 
 
 func _on_sell_pressed() -> void:
@@ -420,14 +334,23 @@ func _on_sell_pressed() -> void:
 		_deselect_tower()
 
 
+func _on_pause_pressed() -> void:
+	get_tree().paused = not get_tree().paused
+
+
+func _on_next_wave_pressed() -> void:
+	if wave_spawner.is_waiting() and wave_spawner.can_skip:
+		wave_spawner.skip_to_next_wave()
+
+
 func _on_wave_started(wave_number: int) -> void:
 	_update_hud()
-	_show_message("WAVE %d" % wave_number)
+	hud.show_message("WAVE %d" % wave_number)
 
 
 func _on_level_lost() -> void:
 	level_ended = true
-	_show_message("CASTLE DESTROYED")
+	hud.show_message("CASTLE DESTROYED")
 
 
 func _on_all_waves_complete() -> void:
@@ -435,5 +358,5 @@ func _on_all_waves_complete() -> void:
 	if GameManager.castle_hp > 0:
 		level_ended = true
 		var medal := GameManager.get_medal()
-		_show_message("VICTORY. %s" % medal.to_upper())
+		hud.show_message("VICTORY - %s" % medal.to_upper())
 		GameManager.level_won.emit(medal)

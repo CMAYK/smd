@@ -1,0 +1,189 @@
+[gd_scene load_steps=12 format=3 uid="uid://hud001"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
+[ext_resource type="Theme" path="res://resources/game_theme.tres" id="2"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/topbar_bg.png" id="3"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/icon_coin.png" id="4"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/btn_pause.png" id="5"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/btn_fastforward.png" id="6"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/label_wave.png" id="7"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/btn_page_left.png" id="8"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/btn_page_right.png" id="9"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/shop_slot_frame.png" id="10"]
+[ext_resource type="Texture2D" path="res://resources/sprites/hud/icon_hp.png" id="12"]
+
+[node name="HUD" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1")
+
+[node name="HUDRoot" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+mouse_filter = 2
+
+; ===== TOP BAR BACKGROUND (full width sprite, 354x14) =====
+[node name="TopBarBG" type="TextureRect" parent="HUDRoot"]
+offset_right = 358.0
+offset_bottom = 14.0
+texture = ExtResource("3")
+expand_mode = 3
+stretch_mode = 0
+mouse_filter = 2
+
+; ===== COIN DISPLAY (top-left, on top bar) =====
+[node name="CoinRow" type="HBoxContainer" parent="HUDRoot"]
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 60.0
+offset_bottom = 11.0
+theme_override_constants/separation = 2
+mouse_filter = 2
+
+[node name="CoinIcon" type="TextureRect" parent="HUDRoot/CoinRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(8, 8)
+texture = ExtResource("4")
+expand_mode = 0
+stretch_mode = 0
+mouse_filter = 2
+
+[node name="CoinLabel" type="Label" parent="HUDRoot/CoinRow"]
+layout_mode = 2
+text = "9999"
+mouse_filter = 2
+
+; ===== HP MUSHROOMS (top-right, on top bar) =====
+[node name="HPContainer" type="HBoxContainer" parent="HUDRoot"]
+offset_left = 260.0
+offset_top = 2.0
+offset_right = 356.0
+offset_bottom = 12.0
+theme_override_constants/separation = 1
+alignment = 2
+mouse_filter = 2
+
+; ===== LEFT SIDE BELOW TOP BAR =====
+; Layout: Pause button (left col), WAVE label + next-wave btn (right col)
+;         Next-wave button below pause
+;         Wave count below WAVE label
+
+; -- Pause button (below top bar, far left) --
+[node name="PauseButton" type="TextureButton" parent="HUDRoot"]
+offset_left = 2.0
+offset_top = 16.0
+offset_right = 17.0
+offset_bottom = 31.0
+texture_normal = ExtResource("5")
+
+; -- Next wave button (below pause) --
+[node name="NextWaveButton" type="TextureButton" parent="HUDRoot"]
+offset_left = 2.0
+offset_top = 33.0
+offset_right = 17.0
+offset_bottom = 48.0
+texture_normal = ExtResource("6")
+
+; -- WAVE label (right of pause button) --
+[node name="WaveIcon" type="TextureRect" parent="HUDRoot"]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 46.0
+offset_bottom = 25.0
+texture = ExtResource("7")
+expand_mode = 3
+stretch_mode = 0
+mouse_filter = 2
+
+; -- Wave count (below WAVE label) --
+[node name="WaveLabel" type="Label" parent="HUDRoot"]
+offset_left = 20.0
+offset_top = 27.0
+offset_right = 60.0
+offset_bottom = 35.0
+text = "1/5"
+mouse_filter = 2
+
+; ===== SHOP BAR (to the right of left controls) =====
+[node name="ShopBar" type="HBoxContainer" parent="HUDRoot"]
+offset_left = 62.0
+offset_top = 16.0
+offset_right = 356.0
+offset_bottom = 52.0
+theme_override_constants/separation = 1
+alignment = 1
+mouse_filter = 2
+
+[node name="PageLeft" type="TextureButton" parent="HUDRoot/ShopBar"]
+layout_mode = 2
+texture_normal = ExtResource("8")
+
+[node name="ShopSlots" type="HBoxContainer" parent="HUDRoot/ShopBar"]
+layout_mode = 2
+theme_override_constants/separation = 8
+mouse_filter = 2
+
+[node name="PageRight" type="TextureButton" parent="HUDRoot/ShopBar"]
+layout_mode = 2
+texture_normal = ExtResource("9")
+
+; -- Page dots (below shop, centered) --
+[node name="PageDots" type="HBoxContainer" parent="HUDRoot"]
+offset_left = 100.0
+offset_top = 53.0
+offset_right = 320.0
+offset_bottom = 58.0
+theme_override_constants/separation = 3
+alignment = 1
+mouse_filter = 2
+
+; ===== TOWER INFO PANEL (shown on tower select) =====
+[node name="TowerPanel" type="PanelContainer" parent="HUDRoot"]
+visible = false
+offset_left = 260.0
+offset_top = 60.0
+offset_right = 356.0
+offset_bottom = 136.0
+mouse_filter = 0
+
+[node name="VBox" type="VBoxContainer" parent="HUDRoot/TowerPanel"]
+layout_mode = 2
+
+[node name="InfoLabel" type="Label" parent="HUDRoot/TowerPanel/VBox"]
+layout_mode = 2
+text = "TOWER INFO"
+mouse_filter = 2
+
+[node name="UpgradeButton" type="Button" parent="HUDRoot/TowerPanel/VBox"]
+layout_mode = 2
+text = "UPG 20"
+
+[node name="SellButton" type="Button" parent="HUDRoot/TowerPanel/VBox"]
+layout_mode = 2
+text = "SELL"
+
+; ===== TIMER LABEL =====
+[node name="TimerLabel" type="Label" parent="HUDRoot"]
+visible = false
+offset_left = 80.0
+offset_top = 60.0
+offset_right = 278.0
+offset_bottom = 68.0
+horizontal_alignment = 1
+text = "NEXT WAVE: 12"
+mouse_filter = 2
+
+; ===== FLASH MESSAGE =====
+[node name="MessageLabel" type="Label" parent="HUDRoot"]
+visible = false
+offset_left = 50.0
+offset_top = 100.0
+offset_right = 308.0
+offset_bottom = 108.0
+horizontal_alignment = 1
+text = ""
+mouse_filter = 2
