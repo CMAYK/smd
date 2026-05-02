@@ -2,11 +2,11 @@ extends Area2D
 class_name Hammer
 
 var velocity: Vector2 = Vector2.ZERO
-var fall_accel: float = 300.0
-var bounce_vy: float = -40.0
+var fall_accel: float = 0.0
+var bounce_vy: float = 0.0
 var ground_y: float = 192.0
-var damage_per_tick: float = 0.4
-var tick_rate: float = 0.15
+var damage_per_tick: float = 0.0
+var tick_rate: float = 0.0
 var has_bounced: bool = false
 var lifetime: float = 4.0
 

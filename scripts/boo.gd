@@ -2,13 +2,13 @@ extends Node2D
 class_name Boo
 
 var target_enemy: Enemy = null
-var move_speed: float = 50.0
-var float_amplitude: float = 8.0
-var damage_per_tick: float = 0.3
-var tick_rate: float = 0.2
-var lifetime: float = 5.0
+var move_speed: float = 0.0
+var float_amplitude: float = 0.0
+var damage_per_tick: float = 0.0
+var tick_rate: float = 0.0
+var lifetime: float = 0.0
 var attached: bool = false
-var launch_velocity: Vector2 = Vector2(0, -200.0)
+var launch_velocity: Vector2 = Vector2.ZERO
 var source_range_area: Area2D = null
 
 var float_time: float = 0.0

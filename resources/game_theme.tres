@@ -1,11 +1,11 @@
-[gd_resource type="Theme" load_steps=2 format=3]
+[gd_resource type="Theme" format=3 uid="uid://b0j5hekks7tss"]
 
-[ext_resource type="FontFile" path="res://resources/font_main.fnt" id="1"]
+[ext_resource type="FontFile" uid="uid://cv8uhjebsve8l" path="res://resources/font_main.fnt" id="1"]
 
 [resource]
 default_font = ExtResource("1")
 default_font_size = 8
-Button/fonts/font = ExtResource("1")
 Button/font_sizes/font_size = 8
-Label/fonts/font = ExtResource("1")
+Button/fonts/font = ExtResource("1")
 Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("1")

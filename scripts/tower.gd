@@ -24,9 +24,9 @@ var is_selected: bool = false
 var throw_left_next: bool = true
 var pendulum_time: float = 0.0
 var pendulum_anchor: Vector2 = Vector2.ZERO
-var pendulum_half_width: float = 48.0
-var pendulum_drop: float = 32.0
-var pendulum_period: float = 2.5
+var pendulum_half_width: float = 0.0
+var pendulum_drop: float = 0.0
+var pendulum_period: float = 0.0
 var hammer_bro_sprite: AnimatedSprite2D = null
 var platform_sprite: AnimatedSprite2D = null
 var has_targets_cached: bool = false
@@ -38,7 +38,7 @@ var ball_tex: ImageTexture = null
 var base_tex: ImageTexture = null
 
 # Boo Chest
-var boo_lifetime: float = 5.0
+var boo_lifetime: float = 0.0
 var chest_sprite: AnimatedSprite2D = null
 var chest_open_timer: float = 0.0
 var chest_pre_spawn_timer: float = 0.0
@@ -61,6 +61,12 @@ func _ready() -> void:
 		projectile_speed = tower_data["projectile_speed"]
 	if tower_data.has("boo_lifetime"):
 		boo_lifetime = tower_data["boo_lifetime"]
+	if tower_data.has("pendulum_half_width"):
+		pendulum_half_width = tower_data["pendulum_half_width"]
+	if tower_data.has("pendulum_drop"):
+		pendulum_drop = tower_data["pendulum_drop"]
+	if tower_data.has("pendulum_period"):
+		pendulum_period = tower_data["pendulum_period"]
 
 	sprite.color = tower_data.get("color", Color(0.5, 0.5, 0.5))
 
@@ -71,6 +77,8 @@ func _ready() -> void:
 			_setup_ball_chain()
 		"boo_chest":
 			_setup_boo_chest()
+		"bob_omb_cannon":
+			_setup_bob_omb_cannon()
 
 	_update_range_shape()
 	_update_visuals()
@@ -183,6 +191,8 @@ func _process(delta: float) -> void:
 			_process_boo_chest(delta)
 		"swinging_stone":
 			_process_swinging_stone(delta)
+		"bob_omb_cannon":
+			_process_bob_omb_cannon(delta)
 
 	if is_selected or tower_type == "swinging_stone":
 		queue_redraw()
@@ -357,8 +367,7 @@ func _spawn_boo(target: Enemy) -> void:
 	boo.move_speed = tower_data.get("boo_speed", 50.0)
 	boo.float_amplitude = tower_data.get("boo_float_amplitude", 8.0)
 	boo.lifetime = boo_lifetime
-	# Jump 4-5 tiles high while also drifting toward target
-	boo.launch_velocity = Vector2(0, -200.0)
+	boo.launch_velocity = tower_data.get("boo_launch_velocity", Vector2(0, -200.0))
 	boo.source_range_area = range_area
 	get_tree().current_scene.add_child(boo)
 
@@ -383,6 +392,33 @@ func _process_swinging_stone(delta: float) -> void:
 					child.take_damage(damage)
 
 	queue_redraw()
+
+
+# ===== BOB-OMB CANNON =====
+
+func _setup_bob_omb_cannon() -> void:
+	# TODO: Replace placeholder with cannon sprite
+	sprite.color = tower_data.get("color", Color(0.15, 0.15, 0.15))
+
+
+func _process_bob_omb_cannon(delta: float) -> void:
+	reload_timer -= delta
+	if reload_timer <= 0:
+		var targets := _get_valid_targets()
+		if targets.size() > 0:
+			_fire_bob_omb()
+			reload_timer = reload_time
+
+
+func _fire_bob_omb() -> void:
+	var bob := preload("res://scenes/bob_omb.tscn").instantiate()
+	bob.global_position = global_position + Vector2(0, -8)
+	bob.damage = damage
+	bob.chase_range = tower_data.get("bob_chase_range", 80.0)
+	bob.chase_speed = tower_data.get("bob_chase_speed", 40.0)
+	bob.wander_time = tower_data.get("bob_wander_time", 5.0)
+	bob.launch_velocity = tower_data.get("bob_launch_velocity", -180.0)
+	get_tree().current_scene.add_child(bob)
 
 
 # ===== SHARED =====
@@ -446,7 +482,7 @@ func flip_direction() -> void:
 
 func set_selected(selected: bool) -> void:
 	is_selected = selected
-	if selection_highlight and tower_type not in ["hammer_bro", "swinging_stone", "boo_chest"]:
+	if selection_highlight and tower_type not in ["hammer_bro", "swinging_stone", "boo_chest", "bob_omb_cannon"]:
 		selection_highlight.visible = selected
 	queue_redraw()
 
