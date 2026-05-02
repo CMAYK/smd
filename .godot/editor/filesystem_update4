@@ -1,4 +1,2 @@
-res://scripts/main_level.gd
-res://scripts/hud.gd
-res://scripts/enemy.gd
-res://scenes/main.tscn
+res://resources/game_theme.tres
+res://scripts/tower.gd
