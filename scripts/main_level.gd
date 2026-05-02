@@ -140,6 +140,7 @@ func _input(event: InputEvent) -> void:
 			KEY_SPACE:
 				if wave_spawner.is_waiting() and wave_spawner.can_skip:
 					wave_spawner.skip_to_next_wave()
+				get_viewport().set_input_as_handled()
 			KEY_LEFT:
 				if selected_tower and selected_tower.facing_right:
 					selected_tower.flip_direction()
