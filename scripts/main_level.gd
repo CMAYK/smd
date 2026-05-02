@@ -22,6 +22,8 @@ var level_ended: bool = false
 var drag_preview: ColorRect = null
 var hammer_bro_preview: Sprite2D = null
 var drag_just_started: bool = false
+var placement_grid: PlacementGrid = null
+var drag_can_place: bool = false
 
 @onready var camera: Camera2D = $Camera2D
 @onready var wave_spawner: WaveSpawner = $WaveSpawner
@@ -43,6 +45,10 @@ func _ready() -> void:
 
 	# Set up tiled ground
 	_setup_tiled_ground()
+
+	# Set up placement grid
+	placement_grid = PlacementGrid.new()
+	add_child(placement_grid)
 
 	wave_spawner.start_waves()
 
@@ -218,24 +224,14 @@ func _try_place_tower(world_pos: Vector2) -> void:
 		_stop_dragging()
 		return
 
-	var place_pos := world_pos
-
-	if def["ground_only"]:
-		place_pos.y = float(GROUND_Y)
-	else:
-		var max_height_y: float = 72.0
-		place_pos.y = maxf(place_pos.y, max_height_y)
-
-		if def.has("min_height_clearance"):
-			var clearance: float = def["min_height_clearance"]
-			var extra_drop: float = 0.0
-			if drag_tower_type == "hammer_bro":
-				extra_drop = 32.0
-			var max_y: float = float(GROUND_Y) - clearance - extra_drop
-			place_pos.y = minf(place_pos.y, max_y)
+	var place_pos: Vector2 = _get_placement_pos(world_pos, def)
 
 	if place_pos.x < 48.0 or place_pos.x > float(BATTLEFIELD_W) - 40.0:
 		hud.show_message("CANNOT PLACE HERE")
+		return
+
+	if not placement_grid.can_place(drag_tower_type, place_pos):
+		hud.show_message("OVERLAPPING")
 		return
 
 	GameManager.spend_coins(cost)
@@ -245,8 +241,31 @@ func _try_place_tower(world_pos: Vector2) -> void:
 	tower.global_position = place_pos
 	add_child(tower)
 
+	placement_grid.register_tower(tower, place_pos)
+	tower.sold.connect(func(_t: Tower) -> void: placement_grid.unregister_tower(_t))
+
 	if not GameManager.can_afford(cost):
 		_stop_dragging()
+
+
+func _get_placement_pos(world_pos: Vector2, def: Dictionary) -> Vector2:
+	var pos := world_pos
+
+	if def["ground_only"]:
+		pos.y = float(GROUND_Y)
+	else:
+		var max_height_y: float = 72.0
+		pos.y = maxf(pos.y, max_height_y)
+
+		if def.has("min_height_clearance"):
+			var clearance: float = def["min_height_clearance"]
+			var extra_drop: float = 0.0
+			if drag_tower_type == "hammer_bro":
+				extra_drop = 32.0
+			var max_y: float = float(GROUND_Y) - clearance - extra_drop
+			pos.y = minf(pos.y, max_y)
+
+	return pos
 
 
 func _try_select_tower_at(world_pos: Vector2) -> bool:
@@ -283,37 +302,36 @@ func _update_drag_preview() -> void:
 	if dragging_tower and drag_tower_type != "":
 		var mouse_world := get_global_mouse_position()
 		var def: Dictionary = GameManager.tower_defs[drag_tower_type]
+		var place_pos: Vector2 = _get_placement_pos(mouse_world, def)
+
+		# Check if placement is valid
+		var in_bounds: bool = place_pos.x >= 48.0 and place_pos.x <= float(BATTLEFIELD_W) - 40.0
+		drag_can_place = in_bounds and placement_grid.can_place(drag_tower_type, place_pos)
+
+		var tint_color: Color
+		if drag_can_place:
+			tint_color = Color(1, 1, 1, 0.6)
+		else:
+			tint_color = Color(1, 0.3, 0.3, 0.6)
 
 		if drag_tower_type == "hammer_bro":
 			drag_preview.visible = false
 			if hammer_bro_preview:
-				var preview_y: float = mouse_world.y
-				preview_y = maxf(preview_y, 72.0)
-				if def.has("min_height_clearance"):
-					var clearance: float = def["min_height_clearance"]
-					var max_y: float = float(GROUND_Y) - clearance - 32.0
-					preview_y = minf(preview_y, max_y)
-				hammer_bro_preview.global_position = Vector2(mouse_world.x, preview_y)
+				hammer_bro_preview.global_position = place_pos
+				hammer_bro_preview.modulate = tint_color
 				hammer_bro_preview.visible = true
 		else:
 			if hammer_bro_preview:
 				hammer_bro_preview.visible = false
 
-			var preview_y: float
-			if def["ground_only"]:
-				preview_y = float(GROUND_Y) - 14.0
+			var mask_rect: Rect2 = placement_grid.get_mask_rect(drag_tower_type, place_pos)
+			drag_preview.position = mask_rect.position
+			drag_preview.size = mask_rect.size
+			if drag_can_place:
+				var base_color: Color = def.get("color", Color(0.5, 0.5, 0.5))
+				drag_preview.color = Color(base_color.r, base_color.g, base_color.b, 0.4)
 			else:
-				preview_y = mouse_world.y - 7.0
-				preview_y = maxf(preview_y, 72.0 - 7.0)
-				if def.has("min_height_clearance"):
-					var clearance: float = def["min_height_clearance"]
-					var extra_drop: float = 0.0
-					var max_y: float = float(GROUND_Y) - clearance - extra_drop - 7.0
-					preview_y = minf(preview_y, max_y)
-
-			drag_preview.position = Vector2(mouse_world.x - 5.0, preview_y)
-			drag_preview.color = def.get("color", Color(0.5, 0.5, 0.5))
-			drag_preview.color.a = 0.5
+				drag_preview.color = Color(1.0, 0.2, 0.2, 0.4)
 			drag_preview.visible = true
 	else:
 		drag_preview.visible = false

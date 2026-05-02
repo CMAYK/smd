@@ -11,6 +11,10 @@ signal reached_castle(enemy: Enemy)
 var current_hp: float
 var castle_x: float = 0.0
 var is_alive: bool = true
+var vertical_velocity: float = 0.0
+var is_airborne: bool = false
+var base_y: float = 0.0
+const GRAVITY: float = 300.0
 
 const MARIO_SHEET_PATH := "res://resources/sprites/mario/mario.png"
 
@@ -47,6 +51,7 @@ func _ready() -> void:
 	_setup_mario_sprite()
 	_update_hp_bar()
 	add_to_group("enemies")
+	base_y = global_position.y
 
 
 func _setup_mario_sprite() -> void:
@@ -91,7 +96,24 @@ func _physics_process(delta: float) -> void:
 	if not is_alive:
 		return
 
-	velocity = Vector2(move_speed, 0)
+	# Horizontal movement never stops
+	velocity.x = move_speed
+
+	# Vertical: apply gravity when airborne
+	if is_airborne:
+		vertical_velocity += GRAVITY * delta
+		velocity.y = vertical_velocity
+
+		# Check if landed
+		if global_position.y >= base_y and vertical_velocity > 0:
+			global_position.y = base_y
+			vertical_velocity = 0.0
+			velocity.y = 0.0
+			is_airborne = false
+			remove_meta("springboard_launched")
+	else:
+		velocity.y = 0
+
 	move_and_slide()
 
 	if global_position.x >= castle_x:
@@ -143,3 +165,8 @@ func _update_hp_bar() -> void:
 		var ratio := clampf(current_hp / max_hp, 0.0, 1.0)
 		hp_bar.size.x = 14.0 * ratio
 		hp_bar.color = Color(1.0 - ratio, ratio, 0.0)
+
+
+func apply_launch(launch_velocity: float) -> void:
+	vertical_velocity = launch_velocity
+	is_airborne = true

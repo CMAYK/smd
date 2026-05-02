@@ -1,7 +1,4 @@
-res://resources/game_theme.tres
+res://scripts/projectile.gd
 res://scripts/tower.gd
 res://scripts/game_manager.gd
-res://scenes/main.tscn
-res://scripts/bob_omb.gd
-res://scripts/boo.gd
-res://scripts/hammer.gd
+res://scripts/enemy.gd

@@ -44,6 +44,23 @@ var chest_open_timer: float = 0.0
 var chest_pre_spawn_timer: float = 0.0
 var _pending_boo_target: Enemy = null
 
+# Koopa Shell Pipe
+var pipe_sprite: AnimatedSprite2D = null
+var ammo_sprite: Sprite2D = null
+
+# Bob-omb Cannon
+var cannon_sprite: Sprite2D = null
+
+# Bowser Statue
+var laser_active: bool = false
+var statue_height_offset: float = 0.0
+
+# Lakitu
+# (no extra vars needed)
+
+# Lava Lotus
+# (no extra vars needed)
+
 @onready var sprite: ColorRect = $Sprite
 @onready var range_area: Area2D = $RangeArea
 @onready var range_shape: CollisionShape2D = $RangeArea/CollisionShape2D
@@ -71,6 +88,8 @@ func _ready() -> void:
 	sprite.color = tower_data.get("color", Color(0.5, 0.5, 0.5))
 
 	match tower_type:
+		"koopa_shell_pipe":
+			_setup_koopa_shell_pipe()
 		"hammer_bro":
 			_setup_hammer_bro()
 		"swinging_stone":
@@ -79,6 +98,14 @@ func _ready() -> void:
 			_setup_boo_chest()
 		"bob_omb_cannon":
 			_setup_bob_omb_cannon()
+		"springboard":
+			_setup_springboard()
+		"bowser_statue":
+			_setup_bowser_statue()
+		"lakitu":
+			_setup_lakitu()
+		"lava_lotus":
+			_setup_lava_lotus()
 
 	_update_range_shape()
 	_update_visuals()
@@ -89,6 +116,39 @@ func _ready() -> void:
 
 
 # ===== SETUP =====
+
+func _setup_koopa_shell_pipe() -> void:
+	sprite.visible = false
+	direction_indicator.visible = false
+
+	# Shell launcher: 77x22, 2 frames of 38x22 with 1px padding
+	# Frame 0 = facing left, Frame 1 = facing right
+	var pipe_tex := load("res://resources/sprites/koopa_shell_pipe.png") as Texture2D
+	if pipe_tex:
+		pipe_sprite = AnimatedSprite2D.new()
+		var frames := SpriteFrames.new()
+		frames.add_animation("left")
+		frames.add_animation("right")
+		var img: Image = pipe_tex.get_image()
+		frames.add_frame("left", ImageTexture.create_from_image(img.get_region(Rect2i(0, 0, 38, 22))))
+		frames.add_frame("right", ImageTexture.create_from_image(img.get_region(Rect2i(39, 0, 38, 22))))
+		frames.set_animation_speed("left", 1.0)
+		frames.set_animation_speed("right", 1.0)
+		frames.set_animation_loop("left", false)
+		frames.set_animation_loop("right", false)
+		pipe_sprite.sprite_frames = frames
+		pipe_sprite.play("left" if not facing_right else "right")
+		pipe_sprite.offset = Vector2(0, -11)
+		add_child(pipe_sprite)
+
+	# Ammo overlay: 12x12, displayed at 0x5 from bottom-center origin
+	var ammo_tex := load("res://resources/sprites/koopa_shell_ammo.png") as Texture2D
+	if ammo_tex:
+		ammo_sprite = Sprite2D.new()
+		ammo_sprite.texture = ammo_tex
+		ammo_sprite.offset = Vector2(0, -10)
+		add_child(ammo_sprite)
+
 
 func _setup_hammer_bro() -> void:
 	sprite.visible = false
@@ -193,8 +253,16 @@ func _process(delta: float) -> void:
 			_process_swinging_stone(delta)
 		"bob_omb_cannon":
 			_process_bob_omb_cannon(delta)
+		"springboard":
+			_process_springboard(delta)
+		"bowser_statue":
+			_process_bowser_statue(delta)
+		"lakitu":
+			_process_lakitu(delta)
+		"lava_lotus":
+			_process_lava_lotus(delta)
 
-	if is_selected or tower_type == "swinging_stone":
+	if is_selected or tower_type == "swinging_stone" or tower_type == "bowser_statue":
 		queue_redraw()
 
 
@@ -234,6 +302,13 @@ func _draw() -> void:
 		if ball_tex:
 			var ball_pos := dir * 51.0
 			draw_texture(ball_tex, ball_pos - Vector2(16, 14))
+
+	# Bowser Statue: draw laser when firing
+	if tower_type == "bowser_statue" and laser_active:
+		var laser_dir := Vector2(1, 1).normalized() if facing_right else Vector2(-1, 1).normalized()
+		var laser_end := laser_dir * 300.0
+		draw_line(Vector2(0, -8), laser_end, Color(1.0, 0.3, 0.0, 0.8), 2.0)
+		draw_line(Vector2(0, -8), laser_end, Color(1.0, 0.8, 0.2, 0.4), 4.0)
 
 
 # ===== KOOPA SHELL PIPE =====
@@ -397,8 +472,15 @@ func _process_swinging_stone(delta: float) -> void:
 # ===== BOB-OMB CANNON =====
 
 func _setup_bob_omb_cannon() -> void:
-	# TODO: Replace placeholder with cannon sprite
-	sprite.color = tower_data.get("color", Color(0.15, 0.15, 0.15))
+	sprite.visible = false
+
+	var cannon_tex := load("res://resources/sprites/bob_omb_cannon.png") as Texture2D
+	if cannon_tex:
+		cannon_sprite = Sprite2D.new()
+		cannon_sprite.texture = cannon_tex
+		# 14x17, bottom-center origin
+		cannon_sprite.offset = Vector2(0, -int(cannon_tex.get_height() / 2))
+		add_child(cannon_sprite)
 
 
 func _process_bob_omb_cannon(delta: float) -> void:
@@ -419,6 +501,162 @@ func _fire_bob_omb() -> void:
 	bob.wander_time = tower_data.get("bob_wander_time", 5.0)
 	bob.launch_velocity = tower_data.get("bob_launch_velocity", -180.0)
 	get_tree().current_scene.add_child(bob)
+
+
+# ===== SPRINGBOARD =====
+
+func _setup_springboard() -> void:
+	# Yellow placeholder for now
+	sprite.color = tower_data.get("color", Color(0.9, 0.8, 0.1))
+	sprite.offset_left = -8.0
+	sprite.offset_right = 8.0
+	sprite.offset_top = -10.0
+	sprite.offset_bottom = 0.0
+
+
+func _process_springboard(_delta: float) -> void:
+	# Check for enemies walking over the springboard
+	var launch_height: float = tower_data.get("launch_height", 48.0)
+	for child in get_tree().current_scene.get_children():
+		if child is Enemy and child.is_alive:
+			var dist_x: float = abs(child.global_position.x - global_position.x)
+			var dist_y: float = abs(child.global_position.y - global_position.y)
+			if dist_x < 8.0 and dist_y < 6.0:
+				if not child.has_meta("springboard_launched"):
+					child.set_meta("springboard_launched", true)
+					child.take_damage(damage)
+					_launch_mario(child, launch_height)
+
+
+func _launch_mario(enemy: Enemy, height: float) -> void:
+	# Calculate launch velocity to reach the desired height
+	# v = sqrt(2 * g * h), negative for upward
+	var launch_vel: float = -sqrt(2.0 * 300.0 * height)
+	enemy.apply_launch(launch_vel)
+
+
+# ===== BOWSER STATUE =====
+
+func _setup_bowser_statue() -> void:
+	# Grey placeholder, 16x32
+	sprite.color = tower_data.get("color", Color(0.4, 0.4, 0.4))
+	sprite.offset_left = -8.0
+	sprite.offset_right = 8.0
+	sprite.offset_top = -32.0
+	sprite.offset_bottom = 0.0
+
+
+func _process_bowser_statue(delta: float) -> void:
+	laser_active = false
+
+	# Check if any mario is in the 45-degree line of sight
+	var laser_dir := Vector2(1, 1).normalized() if facing_right else Vector2(-1, 1).normalized()
+	var origin := global_position + Vector2(0, -8)
+
+	reload_timer -= delta
+	var can_tick: bool = reload_timer <= 0.0
+
+	for child in get_tree().current_scene.get_children():
+		if child is Enemy and is_instance_valid(child):
+			var to_enemy: Vector2 = child.global_position - origin
+			var dist: float = to_enemy.length()
+
+			if dist > 0.0 and dist < attack_range:
+				# Check if enemy is along the 45-degree line
+				var dir_to_enemy: Vector2 = to_enemy.normalized()
+				var dot: float = dir_to_enemy.dot(laser_dir)
+
+				if dot > 0.97: # ~14 degree tolerance for the laser line
+					laser_active = true
+
+					if can_tick:
+						child.take_damage(damage)
+
+	if can_tick and laser_active:
+		reload_timer = tower_data.get("dps_tick_rate", 0.1)
+
+	queue_redraw()
+
+
+# ===== LAKITU =====
+
+func _setup_lakitu() -> void:
+	# Green placeholder, cloud-like
+	sprite.color = tower_data.get("color", Color(0.2, 0.7, 0.2))
+	sprite.offset_left = -10.0
+	sprite.offset_right = 10.0
+	sprite.offset_top = -12.0
+	sprite.offset_bottom = 0.0
+
+
+func _process_lakitu(delta: float) -> void:
+	reload_timer -= delta
+	if reload_timer <= 0:
+		# Find the most advanced mario in range
+		var best_target: Enemy = null
+		var targets := _get_valid_targets()
+		for t in targets:
+			if best_target == null or t.global_position.x > best_target.global_position.x:
+				best_target = t
+
+		if best_target:
+			_drop_spiny(best_target)
+			reload_timer = reload_time
+
+
+func _drop_spiny(target: Enemy) -> void:
+	var spiny := preload("res://scenes/spiny.tscn").instantiate()
+	spiny.global_position = global_position + Vector2(0, 4)
+	spiny.damage = damage
+	spiny.drop_damage = damage * tower_data.get("spiny_drop_damage_mult", 2.0)
+	spiny.walk_speed = tower_data.get("spiny_speed", 18.0)
+	spiny.ground_y = GROUND_Y
+	# Direction toward the most advanced mario
+	spiny.walk_direction = 1.0 if target.global_position.x > global_position.x else -1.0
+	get_tree().current_scene.add_child(spiny)
+
+
+# ===== LAVA LOTUS =====
+
+func _setup_lava_lotus() -> void:
+	# Red-orange placeholder
+	sprite.color = tower_data.get("color", Color(0.9, 0.3, 0.1))
+	sprite.offset_left = -8.0
+	sprite.offset_right = 8.0
+	sprite.offset_top = -14.0
+	sprite.offset_bottom = 0.0
+
+
+func _process_lava_lotus(delta: float) -> void:
+	reload_timer -= delta
+	if reload_timer <= 0:
+		var targets := _get_valid_targets()
+		if targets.size() > 0:
+			_fire_lava()
+			reload_timer = reload_time
+
+
+func _fire_lava() -> void:
+	var ball_count: int = tower_data.get("lava_ball_count", 3)
+	var cone_angle: float = deg_to_rad(tower_data.get("lava_cone_angle", 120.0))
+	var lifetime: float = tower_data.get("lava_ball_lifetime", 10.0)
+
+	# Fire balls in a spread within the cone (centered upward)
+	# Cone center is straight up (-PI/2), spread across cone_angle
+	var start_angle: float = -PI / 2.0 - cone_angle / 2.0
+	for i in range(ball_count):
+		var t: float = float(i) / float(ball_count - 1) if ball_count > 1 else 0.5
+		var angle: float = start_angle + t * cone_angle
+		# Add small random variation
+		angle += randf_range(-0.1, 0.1)
+
+		var lava := preload("res://scenes/lava_ball.tscn").instantiate()
+		lava.global_position = global_position + Vector2(0, -12)
+		lava.velocity = Vector2(cos(angle), sin(angle)) * randf_range(50.0, 80.0)
+		lava.damage = damage
+		lava.ground_y = GROUND_Y
+		lava.floor_lifetime = lifetime
+		get_tree().current_scene.add_child(lava)
 
 
 # ===== SHARED =====
@@ -482,7 +720,7 @@ func flip_direction() -> void:
 
 func set_selected(selected: bool) -> void:
 	is_selected = selected
-	if selection_highlight and tower_type not in ["hammer_bro", "swinging_stone", "boo_chest", "bob_omb_cannon"]:
+	if selection_highlight and tower_type not in ["koopa_shell_pipe", "hammer_bro", "swinging_stone", "boo_chest", "bob_omb_cannon"]:
 		selection_highlight.visible = selected
 	queue_redraw()
 
@@ -493,8 +731,12 @@ func _update_range_shape() -> void:
 
 
 func _update_visuals() -> void:
-	if direction_indicator and tower_data.get("directional", false):
+	if direction_indicator and tower_data.get("directional", false) and not pipe_sprite:
 		if facing_right:
 			direction_indicator.position = Vector2(5, -9)
 		else:
 			direction_indicator.position = Vector2(-7, -9)
+
+	# Switch shell pipe sprite frame based on direction
+	if pipe_sprite:
+		pipe_sprite.play("right" if facing_right else "left")
