@@ -1,3 +1,4 @@
 res://scripts/main_level.gd
 res://scripts/hud.gd
 res://scripts/enemy.gd
+res://scenes/main.tscn

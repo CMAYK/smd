@@ -23,8 +23,8 @@ var frame_rects: Array[Rect2i] = [
 	Rect2i(31, 0, 14, 32),   # 2: walk_hold1
 	Rect2i(47, 0, 15, 32),   # 3: walk_hold2
 	Rect2i(63, 0, 16, 32),   # 4: kick_held
-	Rect2i(80, 0, 16, 32),   # 5: run1
-	Rect2i(97, 0, 15, 32),  # 6: run2
+	Rect2i(80, 0, 15, 32),   # 5: run1
+	Rect2i(96, 0, 16, 32),   # 6: run2
 	Rect2i(113, 0, 16, 32),  # 7: jump
 	Rect2i(130, 0, 16, 32),  # 8: fall
 	Rect2i(147, 0, 15, 32),  # 9: ride_yoshi
