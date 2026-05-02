@@ -33,7 +33,7 @@ var level_data: Dictionary = {
 	"starting_coins": 500,
 	"castle_hp": 10,
 	"total_waves": 5,
-	"battlefield_width": 1074,  # 3 screens wide at 358px viewport
+	"battlefield_width": 1920,
 	"waves": [
 		{"count": 3, "enemy_type": "mario", "base_hp": 3, "spawn_delay": 1.5},
 		{"count": 5, "enemy_type": "mario", "base_hp": 4, "spawn_delay": 1.2},

@@ -5,7 +5,7 @@ const VIEWPORT_H := 224
 const TILE := 16
 const GROUND_HEIGHT := TILE * 2  # 32px
 const GROUND_Y := VIEWPORT_H - GROUND_HEIGHT  # 192
-const BATTLEFIELD_W := 1074
+const BATTLEFIELD_W := 1920
 
 const SCROLL_SPEED := 150.0
 const SCROLL_WHEEL_STEP := 40.0
@@ -32,12 +32,17 @@ func _ready() -> void:
 	GameManager.start_level()
 	_connect_signals()
 
+	# Spawn marios at the pipe opening (pipe is 32px wide at x=0)
+	wave_spawner.spawn_x = 32.0
 	wave_spawner.castle_x = float(BATTLEFIELD_W) - 30.0
 	wave_spawner.spawn_y = float(GROUND_Y)
 
-	camera_target_x = float(VIEWPORT_W) / 2.0
+	camera_target_x = 0.0
 	camera_x = camera_target_x
-	camera.position = Vector2(camera_x, float(VIEWPORT_H) / 2.0)
+	camera.position = Vector2(camera_x, 0.0)
+
+	# Set up tiled ground
+	_setup_tiled_ground()
 
 	wave_spawner.start_waves()
 
@@ -64,6 +69,31 @@ func _ready() -> void:
 	_update_hud()
 
 
+func _setup_tiled_ground() -> void:
+	# Remove the TextureRect placeholder if it exists (we'll tile manually)
+	if has_node("GroundTiles"):
+		$GroundTiles.queue_free()
+
+	# tile_1.png is 16x32: top 16x16 = grass, bottom 16x16 = dirt
+	# We tile it across the battlefield at GROUND_Y
+	var tile_tex := load("res://resources/sprites/tiles/tile_1.png") as Texture2D
+	if not tile_tex:
+		return
+
+	var ground_container := Node2D.new()
+	ground_container.name = "TiledGround"
+	ground_container.z_index = -1  # Behind everything
+	add_child(ground_container)
+
+	var num_tiles: int = ceili(float(BATTLEFIELD_W) / float(TILE))
+	for i in range(num_tiles):
+		var tile_sprite := Sprite2D.new()
+		tile_sprite.texture = tile_tex
+		tile_sprite.centered = false
+		tile_sprite.position = Vector2(float(i * TILE), float(GROUND_Y))
+		ground_container.add_child(tile_sprite)
+
+
 func _connect_signals() -> void:
 	# GameManager signals
 	GameManager.coins_changed.connect(func(_v: int) -> void: _update_hud())
@@ -84,7 +114,6 @@ func _process(delta: float) -> void:
 	_handle_keyboard_scroll(delta)
 	camera_x = lerpf(camera_x, camera_target_x, SCROLL_SMOOTH * delta)
 	camera.position.x = camera_x
-	_update_timer_display()
 	_update_drag_preview()
 
 	if drag_just_started:
@@ -108,8 +137,8 @@ func _scroll_camera_by(amount: float) -> void:
 
 
 func _clamp_camera_target() -> void:
-	var half_vp := float(VIEWPORT_W) / 2.0
-	camera_target_x = clampf(camera_target_x, half_vp, float(BATTLEFIELD_W) - half_vp)
+	# Camera anchor_mode = 0 (FIXED_TOP_LEFT): position is top-left of viewport
+	camera_target_x = clampf(camera_target_x, 0.0, float(BATTLEFIELD_W) - float(VIEWPORT_W))
 
 
 func _is_mouse_over_gui() -> bool:
@@ -205,7 +234,7 @@ func _try_place_tower(world_pos: Vector2) -> void:
 			var max_y: float = float(GROUND_Y) - clearance - extra_drop
 			place_pos.y = minf(place_pos.y, max_y)
 
-	if place_pos.x < 10.0 or place_pos.x > float(BATTLEFIELD_W) - 40.0:
+	if place_pos.x < 48.0 or place_pos.x > float(BATTLEFIELD_W) - 40.0:
 		hud.show_message("CANNOT PLACE HERE")
 		return
 
@@ -299,13 +328,6 @@ func _update_hud() -> void:
 
 	if selected_tower:
 		hud.refresh_tower_panel(selected_tower)
-
-
-func _update_timer_display() -> void:
-	if wave_spawner.is_waiting():
-		hud.update_timer(wave_spawner.get_countdown(), wave_spawner.can_skip)
-	else:
-		hud.hide_timer()
 
 
 # ===== SIGNAL HANDLERS =====

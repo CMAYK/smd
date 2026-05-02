@@ -1,16 +1,3 @@
-res://scripts/hammer.gd
-res://scripts/tower.gd
-res://scripts/boo.gd
-res://scripts/game_manager.gd
 res://scripts/main_level.gd
-res://scenes/hammer.tscn
-res://scripts/wave_spawner.gd
 res://scripts/hud.gd
-res://scenes/hud.tscn
-res://resources/game_theme.tres
-res://scenes/boo.tscn
-res://scenes/enemy.tscn
-res://scenes/projectile.tscn
-res://scenes/tower.tscn
 res://scripts/enemy.gd
-res://scripts/projectile.gd

@@ -290,22 +290,6 @@ func update_coins(amount: int) -> void:
 func update_wave(current_wave: int, total_waves: int) -> void:
 	wave_label.text = "%d/%d" % [current_wave, total_waves]
 
-
-func update_timer(countdown: float, can_skip: bool) -> void:
-	if countdown > 0:
-		var t: int = ceili(countdown)
-		timer_label.text = "NEXT WAVE: %d" % t
-		if can_skip:
-			timer_label.text += " [SPACE]"
-		timer_label.visible = true
-	else:
-		timer_label.visible = false
-
-
-func hide_timer() -> void:
-	timer_label.visible = false
-
-
 # ===== TOWER PANEL =====
 
 func show_tower_panel(tower: Tower) -> void:

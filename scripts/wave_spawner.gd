@@ -4,7 +4,7 @@ class_name WaveSpawner
 signal all_waves_complete()
 signal wave_enemies_spawned(wave_number: int)
 
-@export var spawn_x: float = -10.0
+@export var spawn_x: float = 32.0
 @export var spawn_y: float = 192.0  # Ground surface Y
 @export var castle_x: float = 700.0
 
