@@ -86,8 +86,6 @@ func _setup_hammer_bro() -> void:
 	sprite.visible = false
 	selection_highlight.visible = false
 	pendulum_anchor = global_position
-	# Start at the lowest center of the swing arc (quarter period = bottom)
-	pendulum_time = pendulum_period / 4.0
 
 	# Platform: 109x26, 2 frames of 54x26 with 1px gap
 	var platform_tex_res := load("res://resources/sprites/hammer_bro_platform.png") as Texture2D
@@ -144,9 +142,6 @@ func _setup_ball_chain() -> void:
 		chain_tex = ImageTexture.create_from_image(img.get_region(Rect2i(33, 12, 16, 16)))
 		base_tex = ImageTexture.create_from_image(img.get_region(Rect2i(50, 12, 16, 16)))
 
-	# Start vertical: ball at top, swing_angle = -PI/2 (pointing up)
-	swing_angle = -PI / 2.0
-
 
 func _setup_boo_chest() -> void:
 	sprite.visible = false
@@ -196,33 +191,25 @@ func _draw() -> void:
 		draw_arc(range_center, attack_range, 0, TAU, 64, Color(1, 1, 0, 0.25), 1.0)
 		draw_circle(range_center, attack_range, Color(1, 1, 0, 0.08))
 
-	# Ball n Chain: 4 segments — base, chain, chain, ball
-	# Each segment has 1px gap between them
-	# Segments are laid out along the swing direction from base (center) outward to ball
+	# Ball n Chain: draw using sprites (center origin)
 	if tower_type == "swinging_stone":
-		var dir := Vector2(cos(swing_angle), sin(swing_angle))
+		var chain_len: float = tower_data.get("chain_length", 48.0)
+		var ball_pos := Vector2(cos(swing_angle), sin(swing_angle)) * chain_len
 
-		# Segment sizes: base=16x16, chain=16x16, chain=16x16, ball=32x28
-		# With 1px gaps: base(16) + 1 + chain(16) + 1 + chain(16) + 1 + ball center
-		# Segments placed along dir from origin outward
-
-		# Base at origin (centered)
+		# Base at center origin
 		if base_tex:
 			draw_texture(base_tex, Vector2(-8, -8))
 
-		# Chain 1: 16px from center + 1px gap = 17px along dir
+		# Chain segments (non-rotating)
+		var num_segments: int = int(chain_len / float(TILE))
 		if chain_tex:
-			var chain1_pos := dir * 17.0
-			draw_texture(chain_tex, chain1_pos - Vector2(8, 8))
+			for i in range(num_segments):
+				var t: float = (float(i) + 1.0) / (float(num_segments) + 1.0)
+				var seg_pos := ball_pos * t
+				draw_texture(chain_tex, seg_pos - Vector2(8, 8))
 
-		# Chain 2: 17 + 16 + 1 = 34px along dir
-		if chain_tex:
-			var chain2_pos := dir * 34.0
-			draw_texture(chain_tex, chain2_pos - Vector2(8, 8))
-
-		# Ball: 34 + 16 + 1 = 51px along dir (ball is 32x28, offset from center)
+		# Ball (non-rotating)
 		if ball_tex:
-			var ball_pos := dir * 51.0
 			draw_texture(ball_tex, ball_pos - Vector2(16, 14))
 
 
@@ -282,7 +269,7 @@ func _throw_hammer() -> void:
 	hammer.damage_per_tick = damage
 	hammer.tick_rate = tower_data.get("hammer_tick_rate", 0.15)
 	hammer.fall_accel = tower_data.get("hammer_gravity", 300.0)
-	hammer.bounce_vy = tower_data.get("hammer_bounce_vy", -2000.0)
+	hammer.bounce_vy = tower_data.get("hammer_bounce_vy", -40.0)
 	hammer.ground_y = GROUND_Y
 
 	var h_speed: float = projectile_speed
@@ -369,9 +356,9 @@ func _process_swinging_stone(delta: float) -> void:
 	var rot_speed: float = tower_data.get("rotation_speed", 1.257)
 	swing_angle += rot_speed * delta
 
-	# Ball is 51px from center along swing direction
+	var chain_len: float = tower_data.get("chain_length", 48.0)
 	var ball_r: float = tower_data.get("ball_radius", 16.0)
-	var ball_pos := global_position + Vector2(cos(swing_angle), sin(swing_angle)) * 51.0
+	var ball_pos := global_position + Vector2(cos(swing_angle), sin(swing_angle)) * chain_len
 
 	reload_timer -= delta
 	if reload_timer <= 0:
